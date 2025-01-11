@@ -209,7 +209,7 @@ struct AufbaIntegerationView:View{
                 .frame(width: screenWidth * 0.25, height: screenHeigth * 0.34)
                 .overlay(alignment:.top){
                     Text("Electronic Configuration")
-                        .font(.custom(headerFont, size: 16))
+                        .font(.custom(headerFont, size:isIPhone ? 14:16))
                         .bold()
                         .foregroundStyle(contentFontColor)
                         .padding()

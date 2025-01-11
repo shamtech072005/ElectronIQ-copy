@@ -101,7 +101,7 @@ func applicationOfAtom(selectElement:Int)->some View{
                 Text("2) \(elementUses[selectElement][1])")
                 Text("3) \(elementUses[selectElement][2])")
              }
-            .font(.custom(atomSymbolFont, size: 14))
+            .font(.custom(atomSymbolFont, size: 13))
             Image("\(elementsSymbols[selectElement])_Rimg")
                    .resizable()
                    

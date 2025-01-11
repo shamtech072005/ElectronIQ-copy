@@ -446,7 +446,7 @@ func renderBasicParticlesOfAnAtom(selectedElement:Int) -> some View{
                 }
             }
         }
-        .offset(x:-70,y:10)
+        .offset(x:isIPhone ? -70:-100,y:10)
         Group{
             Section{
                 ZStack{
@@ -558,7 +558,7 @@ func renderValanceElectron(selectedElement:Int)->some View{
             
         }
         BouncingButton(buttonContent: "Electronic Configuration", selectedElement: selectedElement, destination: ElectronicConfiguration(selectedElement: selectedElement))
-        BouncingButton(buttonContent: "Aufba Principle", selectedElement: selectedElement, destination: AufbaIntegerationView(selectedElement: selectedElement))
+        BouncingButton(buttonContent: "Aufbau Principle", selectedElement: selectedElement, destination: AufbaIntegerationView(selectedElement: selectedElement))
         
     }
     .padding()

@@ -67,6 +67,7 @@ struct ElectronicConfiguration: View {
                             .scaleEffect(1.2)
 
                         }
+                        .offset(y:screenHeigth * 0.007)
                     }
                 }
                 .scaleEffect(isIPhone ? 0.8:1)
