@@ -8,10 +8,12 @@
 import SwiftUI
 import FirebaseAnalytics
 struct ElectronicConfiguration: View {
+    @State private var timer: Timer? = nil
     @State var selectedElement: Int
     @State private var isDrawerOpen = false
     @State private var selectedTab = "K" // Default to "K"
     @State private var isBouncing = false // Controls the bounce effect for the selected button
+    @State var Index:Int = 0
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
@@ -27,19 +29,19 @@ struct ElectronicConfiguration: View {
                                 .scaleEffect(1.3)
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.atomBackground)
-                                .frame(width:isIPhone ? screenWidth * 0.45:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.375:screenHeigth * 0.35)
+                                .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
                                 .overlay{
                                     renderAtomStructure(selectedElement: selectedElement)
                                 }
                         }
                         //finished electronic configuration
                         VStack(spacing:-20){
-                            contentHeader(content: "Sub Shells")
+                            contentHeader(content: "\(selectedTab) Sub Shell")
                                 .zIndex(1)
                                 .scaleEffect(1.3)
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.atomBackground)
-                                .frame(width:isIPhone ? screenWidth * 0.45:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.375:screenHeigth * 0.35)
+                                .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
                                 .overlay{
                                     switch selectedTab {
                                     case "L":
@@ -77,6 +79,12 @@ struct ElectronicConfiguration: View {
 
                 
                 
+            }
+            .onAppear {
+                startTimer()
+            }
+            .onDisappear{
+                stopTimer()
             }
            
             .blur(radius:isDrawerOpen ? 3:0)
@@ -116,6 +124,7 @@ struct ElectronicConfiguration: View {
             // Update the selected tab when button is tapped
             
             selectedTab = key
+            Index = index
             // Restart the bounce animation for the new selection
             withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
                 isBouncing = true
@@ -150,6 +159,20 @@ struct ElectronicConfiguration: View {
             .background(elementCardColor[selectedElement])
             .cornerRadius(10)
             .foregroundStyle(contentFontColor)
+    }
+    
+    private func startTimer() {
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
+            Index = (Index + 1) % shellSymbols.count
+            selectedTab = shellSymbols[Index]
+            print("Selected Tab Updated: \(selectedTab)")
+        }
+    }
+
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 }
 

@@ -40,6 +40,7 @@ func Drawer(isDrawerOpen:Bool)->some View{
                         NavigationLink(destination: getMenuView(at: menuView), label: {
                             Text(menuViewsTitles[menuView])
                                 .font(.custom(titleFont, size: 18))
+                                .padding(.leading,50)
                         })
                     }
                 }
@@ -303,7 +304,7 @@ func renderAtomStructure(selectedElement: Int) -> some View {
                     }
                     
                     AnimatedArrow(
-                        color: shellColors[index],
+                        noOfElectron: electrons, color: shellColors[index],
                         arrowRotation: shellProperties[index][2],
                         textRotation: abs(shellProperties[index][2]),
                         arrowWidth: CGFloat(shellProperties[index][3]),
@@ -585,7 +586,7 @@ struct KShell:View {
         ZStack{
             nucleusElectron(selectedElement: selectedElement)
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[0][0], radius: 30, color: spdfColors[0])
-            AnimatedArrow(color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 100, shellSymbol: "S")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[0][0],color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 100, shellSymbol: "S")
                 .offset(x:45, y: -20)
            
         }
@@ -613,11 +614,11 @@ struct LShell:View {
            
             //s
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[1][0], radius: 40, color: spdfColors[0])
-            AnimatedArrow(color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 100, shellSymbol: "S")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[1][0],color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 100, shellSymbol: "S")
                            .offset(x:35, y: -20)
             //p
             AntiClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[1][1], radius: 55, color: spdfColors[1])
-            AnimatedArrow(color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 100, shellSymbol: "P")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[1][1],color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 100, shellSymbol: "P")
                             .offset(x:120, y: -20)
         }
         .background{
@@ -643,15 +644,15 @@ struct MShell:View {
             ClockWiseAtomShell(numberOfBalls: getShellElectronData(selectedElement: selectedElement)[1], radius: CGFloat(40), color: .red,isHibirnateShell: true)
             //s
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[2][0], radius: 55, color: spdfColors[0])
-            AnimatedArrow(color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 120, shellSymbol: "S")
+            AnimatedArrow(noOfElectron: subshellConfiguration(for: selectedElement)[2][0], color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 120, shellSymbol: "S")
                            .offset(x:30, y: -25)
             //p
             AntiClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[2][1], radius: 70, color: spdfColors[1])
-            AnimatedArrow(color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 120, shellSymbol: "P")
+            AnimatedArrow(noOfElectron: subshellConfiguration(for: selectedElement)[2][1], color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 120, shellSymbol: "P")
                            .offset(x:135, y: -40)
             //d
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[2][2], radius: 85, color: spdfColors[2])
-            AnimatedArrow(color: spdfColors[2], arrowRotation: 140, textRotation: -140, arrowWidth: 100, shellSymbol: "D")
+            AnimatedArrow(noOfElectron: subshellConfiguration(for: selectedElement)[2][2], color: spdfColors[2], arrowRotation: 140, textRotation: -140, arrowWidth: 100, shellSymbol: "D")
                            .offset(x:-8, y: 40)
             //continue
             ForEach(3..<7,id: \.self){index in
@@ -677,19 +678,19 @@ struct NShell:View {
             }
             //s
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[3][0], radius: 60, color: spdfColors[0])
-            AnimatedArrow(color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 120, shellSymbol: "S")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[3][0],color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 120, shellSymbol: "S")
                            .offset(x:37, y: -45)
             //p
             AntiClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[3][1], radius: 75, color: spdfColors[1])
-            AnimatedArrow(color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 100, shellSymbol: "P")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[3][1],color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 100, shellSymbol: "P")
                            .offset(x:130, y: -40)
             //d
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[3][2], radius: 90, color: spdfColors[2])
-            AnimatedArrow(color: spdfColors[2], arrowRotation: 140, textRotation: -140, arrowWidth: 80, shellSymbol: "D")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[3][2],color: spdfColors[2], arrowRotation: 140, textRotation: -140, arrowWidth: 80, shellSymbol: "D")
                            .offset(x:-22, y: 40)
             //f
             AntiClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[3][3], radius: 105, color: spdfColors[3])
-            AnimatedArrow(color: spdfColors[3], arrowRotation: 40, textRotation: -40, arrowWidth: 80, shellSymbol: "F")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[3][3],color: spdfColors[3], arrowRotation: 40, textRotation: -40, arrowWidth: 80, shellSymbol: "F")
                            .offset(x:150, y: 50)
         }
         .background{
@@ -712,19 +713,19 @@ struct OShell:View {
             }
             //s
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[4][0], radius: 75, color: spdfColors[0])
-            AnimatedArrow(color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 120, shellSymbol: "S")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[4][0],color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 120, shellSymbol: "S")
                            .offset(x:25, y: -55)
             //p
             AntiClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[4][1], radius: 90, color: spdfColors[1])
-            AnimatedArrow(color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 100, shellSymbol: "P")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[4][1],color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 100, shellSymbol: "P")
                            .offset(x:143, y: -50)
             //d
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[4][2], radius: 105, color: spdfColors[2])
-            AnimatedArrow(color: spdfColors[2], arrowRotation: 140, textRotation: -140, arrowWidth: 80, shellSymbol: "D")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[4][2],color: spdfColors[2], arrowRotation: 140, textRotation: -140, arrowWidth: 80, shellSymbol: "D")
                            .offset(x:-40, y: 40)
             //f
             AntiClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[4][3], radius: 120, color: spdfColors[3])
-            AnimatedArrow(color: spdfColors[3], arrowRotation: 30, textRotation: -40, arrowWidth: 60, shellSymbol: "F")
+            AnimatedArrow(noOfElectron:subshellConfiguration(for: selectedElement)[4][3],color: spdfColors[3], arrowRotation: 30, textRotation: -40, arrowWidth: 60, shellSymbol: "F")
                            .offset(x:155, y: 50)
         }
         .background{
@@ -756,15 +757,15 @@ struct PShell:View {
 //            ClockWiseAtomShell(numberOfBalls: getShellElectronData(selectedElement: selectedElement)[1], radius: CGFloat(40), color: .red,isHibirnateShell: true)
             //s
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[5][0], radius: 85, color: spdfColors[0])
-            AnimatedArrow(color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 90, shellSymbol: "S")
+            AnimatedArrow(noOfElectron: subshellConfiguration(for: selectedElement)[5][0], color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 90, shellSymbol: "S")
                            .offset(x:-3, y: -55)
             //p
             AntiClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[5][1], radius: 95, color: spdfColors[1])
-            AnimatedArrow(color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 70, shellSymbol: "P")
+            AnimatedArrow(noOfElectron: subshellConfiguration(for: selectedElement)[5][1], color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 70, shellSymbol: "P")
                            .offset(x:133, y: -50)
             //d
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[5][2], radius: 105, color: spdfColors[2])
-            AnimatedArrow(color: spdfColors[2], arrowRotation: 140, textRotation: -140, arrowWidth: 50, shellSymbol: "D")
+            AnimatedArrow(noOfElectron: subshellConfiguration(for: selectedElement)[5][2], color: spdfColors[2], arrowRotation: 140, textRotation: -140, arrowWidth: 50, shellSymbol: "D")
                            .offset(x:-55, y: 40)
             //continue
             ClockWiseAtomShell(numberOfBalls: getShellElectronData(selectedElement: selectedElement)[6], radius: CGFloat(120), color: .red,isHibirnateShell: true)
@@ -789,11 +790,11 @@ struct QShell:View {
             }
             //s
             ClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[6][0], radius: 90, color: spdfColors[0])
-            AnimatedArrow(color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 60, shellSymbol: "S")
+            AnimatedArrow(noOfElectron: subshellConfiguration(for: selectedElement)[6][0], color: spdfColors[0], arrowRotation: 220, textRotation: -220, arrowWidth: 60, shellSymbol: "S")
                            .offset(x:-25, y: -55)
             //p
             AntiClockWiseAtomShell(numberOfBalls: subshellConfiguration(for: selectedElement)[6][1], radius: 105, color: spdfColors[1])
-            AnimatedArrow(color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 40, shellSymbol: "P")
+            AnimatedArrow(noOfElectron: subshellConfiguration(for: selectedElement)[6][1], color: spdfColors[1], arrowRotation: 320, textRotation: -320, arrowWidth: 40, shellSymbol: "P")
                            .offset(x:130, y: -50)
         }
     }

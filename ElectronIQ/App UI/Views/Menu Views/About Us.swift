@@ -33,6 +33,12 @@ struct AboutUsView: View {
             description: "Arjava India Tech Private Ltd., Chennai"
         ),
         TeamMember(
+            name: "Ms.Shruthi Vairavan",
+            role: "Creative Spark",
+            imageSystemName: "lightbulb.max.fill",
+            description: "11th grade, Eastlake High School, WA, USA."
+        ),
+        TeamMember(
             name: "Mr.Raghul Vijaiyan",
             role: "Test Engineer",
             imageSystemName: "list.clipboard.fill",
@@ -129,7 +135,7 @@ struct AboutUsView: View {
                 }
             }
             HStack{
-                ForEach(6..<8,id: \.self) { member in
+                ForEach(6..<9,id: \.self) { member in
                     TeamMemberCard(member: teamMembers[member])
                 }
             }
