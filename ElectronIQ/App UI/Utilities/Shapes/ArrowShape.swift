@@ -66,16 +66,16 @@ struct AnimatedArrow: View {
                 
                     ZStack{
                         Circle().fill(color).frame(width:35)
-                        Text(shellSymbol)
-                            .font(.custom(atomSymbolFont, size: 24))
-                            
-                            
-                        Circle().fill(color).frame(width:25)
-                            .overlay{
-                                Text("\(noOfElectron)")
-                                    .font(.custom(atomSymbolFont, size: 12))
+                            .background{
+                                Circle().fill(color).frame(width:55)
                             }
-                            .offset(x:17,y:-17)
+                        Text(shellSymbol)
+                            .font(.custom(atomSymbolFont, size: 16))
+                            .offset(x:-1,y:1)
+                        Text("\(noOfElectron)")
+                            .font(.custom(atomSymbolFont, size: 10))
+                            .offset(x:8,y:-8)
+                            
                             
                     }
                     .rotationEffect(Angle(degrees: Double(textRotation)),anchor: .center)

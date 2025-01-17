@@ -24,18 +24,6 @@ struct ElectronicConfiguration: View {
                 Group{
                     HStack(spacing:50){
                         VStack(spacing:-20){
-                            contentHeader(content: "Electronic Configuration")
-                                .zIndex(1)
-                                .scaleEffect(1.3)
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.atomBackground)
-                                .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
-                                .overlay{
-                                    renderAtomStructure(selectedElement: selectedElement)
-                                }
-                        }
-                        //finished electronic configuration
-                        VStack(spacing:-20){
                             contentHeader(content: "\(selectedTab) Sub Shell")
                                 .zIndex(1)
                                 .scaleEffect(1.3)
@@ -59,17 +47,32 @@ struct ElectronicConfiguration: View {
                                     default:
                                         KShell(selectedElement: selectedElement)
                                     }
+                                   
                                 }
-                            //shell buttons
                             HStack {
                                 ForEach(0..<nonZeroGetShellElectronData(selectedElement: selectedElement).count, id: \.self) { shell in
                                     SubShellButton(key: shellSymbols[shell], index: shell)
                                 }
                             }
                             .scaleEffect(1.2)
+                        }
+                        //finished electronic configuration
+                        VStack(spacing:-20){
+                            contentHeader(content: "Electronic Configuration")
+                                .zIndex(1)
+                                .scaleEffect(1.3)
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.atomBackground)
+                                .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
+                                .overlay{
+                                    renderAtomStructure(selectedElement: selectedElement)
+                                    
+                                }
+                            //shell buttons
+                            
 
                         }
-                        .offset(y:screenHeigth * 0.007)
+                        .offset(y:-1 * screenHeigth * 0.007)
                     }
                 }
                 .scaleEffect(isIPhone ? 0.8:1)
@@ -164,7 +167,7 @@ struct ElectronicConfiguration: View {
     private func startTimer() {
         
         timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
-            Index = (Index + 1) % shellSymbols.count
+            Index = (Index + 1) % nonZeroGetShellElectronData(selectedElement: selectedElement).count
             selectedTab = shellSymbols[Index]
             print("Selected Tab Updated: \(selectedTab)")
         }
@@ -177,5 +180,5 @@ struct ElectronicConfiguration: View {
 }
 
 #Preview {
-    ElectronicConfiguration(selectedElement: 102)
+    ElectronicConfiguration(selectedElement: 10)
 }

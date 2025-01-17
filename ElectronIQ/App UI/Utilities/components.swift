@@ -306,7 +306,7 @@ func renderAtomStructure(selectedElement: Int) -> some View {
                     AnimatedArrow(
                         noOfElectron: electrons, color: shellColors[index],
                         arrowRotation: shellProperties[index][2],
-                        textRotation: abs(shellProperties[index][2]),
+                        textRotation: shellProperties[index][2] * -1,
                         arrowWidth: CGFloat(shellProperties[index][3]),
                         shellSymbol: shellSymbols[index]
                     )
@@ -827,6 +827,6 @@ struct BouncingBackButton: View {
 
 struct PreviewTester:PreviewProvider{
     static var previews: some View{
-        DetailView(selectedElement: 102)
+        ElectronicConfiguration(selectedElement: 102)
     }
 }
