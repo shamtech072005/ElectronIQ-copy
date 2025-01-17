@@ -26,3 +26,4 @@ let content:[String]=["1s","2s","2p","3s","3p","3d","4s","4p","4d","4f","5s","5p
 
 let APR: [Int] = [0, 1, 2, 3, 4, 6, 5, 7, 10,8,11,14,9,12,15,17,13,16,18]
 
+let spdfSymbols:[String] = ["S","P","D","F"]

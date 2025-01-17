@@ -37,7 +37,7 @@ struct DottedArrow:View {
     }
 }
 struct AnimatedArrow: View {
-    @State var noOfElectron:Int
+    @State var noOfElectron:Int = 0
     @State private var trimAmount: CGFloat = 0.0
     @State private var showText = false
     let color:Color
@@ -66,16 +66,8 @@ struct AnimatedArrow: View {
                 
                     ZStack{
                         Circle().fill(color).frame(width:35)
-                            .background{
-                                Circle().fill(color).frame(width:55)
-                            }
                         Text(shellSymbol)
-                            .font(.custom(atomSymbolFont, size: 16))
-                            .offset(x:-1,y:1)
-                        Text("\(noOfElectron)")
-                            .font(.custom(atomSymbolFont, size: 10))
-                            .offset(x:8,y:-8)
-                            
+                            .font(.custom(atomSymbolFont, size: 24))
                             
                     }
                     .rotationEffect(Angle(degrees: Double(textRotation)),anchor: .center)

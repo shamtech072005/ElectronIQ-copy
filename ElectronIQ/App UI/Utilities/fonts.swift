@@ -8,5 +8,5 @@
 let headerFont:String  = "Arial Rounded MT Bold"
 let titleFont:String = "Futura"
 let versionFont:String = "Futura"
-let atomSymbolFont = "Arial Rounded MT Bold"
-let aufbaPrincipleCardFont:String = "Arial Rounded MT Bold"
+let atomSymbolFont = "Arial Rounded MT Bold" //
+let aufbaPrincipleCardFont:String = "Arial Rounded MT Bold" //

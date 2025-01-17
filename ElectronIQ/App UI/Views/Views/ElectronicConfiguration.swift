@@ -24,29 +24,14 @@ struct ElectronicConfiguration: View {
                 Group{
                     HStack(spacing:50){
                         VStack(spacing:-20){
-                            contentHeader(content: "\(selectedTab) Sub Shell")
+                            contentHeader(content: "Electronic Configuration")
                                 .zIndex(1)
                                 .scaleEffect(1.3)
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.atomBackground)
                                 .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
                                 .overlay{
-                                    switch selectedTab {
-                                    case "L":
-                                        LShell(selectedElement: selectedElement)
-                                    case "M":
-                                        MShell(selectedElement: selectedElement)
-                                    case "N":
-                                        NShell(selectedElement: selectedElement)
-                                    case "O":
-                                        OShell(selectedElement: selectedElement)
-                                    case "P":
-                                        PShell(selectedElement: selectedElement)
-                                    case "Q":
-                                        QShell(selectedElement: selectedElement)
-                                    default:
-                                        KShell(selectedElement: selectedElement)
-                                    }
+                                    renderAtomStructure(selectedElement: selectedElement)
                                    
                                 }
                             HStack {
@@ -58,14 +43,40 @@ struct ElectronicConfiguration: View {
                         }
                         //finished electronic configuration
                         VStack(spacing:-20){
-                            contentHeader(content: "Electronic Configuration")
+                            contentHeader(content: "\(selectedTab) Sub Shell")
                                 .zIndex(1)
                                 .scaleEffect(1.3)
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.atomBackground)
                                 .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
+                                .overlay(alignment:.bottom){
+                                    spdfScoreBoard(index: Index)
+                                        .padding(.bottom,isIPhone ? 20:30)
+                                }
                                 .overlay{
-                                    renderAtomStructure(selectedElement: selectedElement)
+                                    switch selectedTab {
+                                    case "L":
+                                        LShell(selectedElement: selectedElement)
+                                    case "M":
+                                        MShell(selectedElement: selectedElement)
+                                            .scaleEffect(0.8)
+                                    case "N":
+                                        NShell(selectedElement: selectedElement)
+                                            .scaleEffect(0.8)
+                                    case "O":
+                                        OShell(selectedElement: selectedElement)
+                                            .scaleEffect(0.8)
+                                    case "P":
+                                        PShell(selectedElement: selectedElement)
+                                            .scaleEffect(0.8)
+                                    case "Q":
+                                        QShell(selectedElement: selectedElement)
+                                            .scaleEffect(0.8)
+                                    default:
+                                        KShell(selectedElement: selectedElement)
+                                            .scaleEffect(0.8)
+                                    }
+                                    
                                     
                                 }
                             //shell buttons
@@ -85,6 +96,7 @@ struct ElectronicConfiguration: View {
             }
             .onAppear {
                 startTimer()
+                
             }
             .onDisappear{
                 stopTimer()
@@ -128,6 +140,7 @@ struct ElectronicConfiguration: View {
             
             selectedTab = key
             Index = index
+            stopTimer()
             // Restart the bounce animation for the new selection
             withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
                 isBouncing = true
@@ -135,11 +148,14 @@ struct ElectronicConfiguration: View {
         }) {
             RoundedRectangle(cornerRadius: 10)
                 .fill(shellColors[index]) // Button color based on shell
-                .frame(width: screenWidth * 0.04, height: screenWidth * 0.04)
+                .frame(width: screenWidth * 0.045, height: screenWidth * 0.045)
                 .overlay {
                     Text(key)
                         .font(.custom(atomSymbolFont, size: 18))
-                        .foregroundStyle(.white)
+                        
+                    Text("\(getShellElectronData(selectedElement: selectedElement)[index])")
+                        .font(.custom(atomSymbolFont, size: 10))
+                        .offset(x:10,y:-10)
                 }
         }
         .shadow(
@@ -148,6 +164,7 @@ struct ElectronicConfiguration: View {
         )
         .scaleEffect(selectedTab == key && isBouncing ? 1.2 : 1) // Bounce effect only for selected button
         .animation(.easeInOut(duration: 0.5), value: selectedTab) // Smooth shadow and scale transition
+        .foregroundStyle(contentFontColor)
     }
         
     
@@ -163,7 +180,26 @@ struct ElectronicConfiguration: View {
             .cornerRadius(10)
             .foregroundStyle(contentFontColor)
     }
-    
+    @ViewBuilder
+    func spdfScoreBoard(index : Int) -> some View {
+        HStack{
+            ForEach(0..<subshellConfiguration(for: selectedElement)[index].count,id:\.self){i in
+           
+                Capsule()
+                    .fill(spdfColors[i])
+                    .frame(width:screenWidth * 0.06,height: screenWidth * 0.03)
+                    .overlay{
+                        Text("\(spdfSymbols[i]) = \(subshellConfiguration(for: selectedElement)[index][i])")
+                            .font(.custom(atomSymbolFont, size: 14))
+                    }
+            }
+            .onAppear{
+                print(subshellConfiguration(for: selectedElement)[index].count)
+            }
+        }
+        .foregroundColor(contentFontColor)
+        
+    }
     private func startTimer() {
         
         timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
@@ -179,6 +215,9 @@ struct ElectronicConfiguration: View {
     }
 }
 
-#Preview {
-    ElectronicConfiguration(selectedElement: 10)
+struct previewProviderForElectronicConfiguration:PreviewProvider{
+    static var previews: some View{
+        ElectronicConfiguration(selectedElement: 102)
+    
+    }
 }
