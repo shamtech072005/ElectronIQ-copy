@@ -13,6 +13,7 @@ struct ElectronicConfiguration: View {
     @State private var isDrawerOpen = false
     @State private var selectedTab = "K" // Default to "K"
     @State private var isBouncing = false // Controls the bounce effect for the selected button
+    @State private var isOpcitiesController:[Bool] = Array(repeating: true, count: 7)
     @State var Index:Int = 0
     @Environment(\.dismiss) var dismiss
     var body: some View {
@@ -31,7 +32,7 @@ struct ElectronicConfiguration: View {
                                 .fill(.atomBackground)
                                 .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
                                 .overlay{
-                                    renderAtomStructure(selectedElement: selectedElement)
+                                    renderAtomStructure(opacityController:$isOpcitiesController, selectedElement: selectedElement)
                                    
                                 }
                             HStack {
@@ -50,22 +51,35 @@ struct ElectronicConfiguration: View {
                                 .fill(.atomBackground)
                                 .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
                                 .overlay(alignment:.bottom){
-                                    spdfScoreBoard(index: Index)
-                                        .padding(.bottom,isIPhone ? 20:30)
+                                    ZStack{
+                                        Capsule().fill(elementCardColor[selectedElement]).frame(width:screenWidth * 0.3,height:screenWidth * 0.055)
+                                            .overlay(alignment:.top){
+                                                RoundedRectangle(cornerRadius: 10).fill(.atomBackground).frame(width:screenWidth * 0.15,height:screenWidth * 0.02)
+                                                    
+                                                    .overlay{
+                                                        Text("\(selectedTab) Sub Shell")
+                                                            .font(.custom(atomSymbolFont, size:isIPhone ? 12:14))
+                                                    }
+                                                    .offset(y:-10)
+                                            }
+                                        spdfScoreBoard(index: Index)
+                                          
+                                    }
+                                    .padding(.bottom,20)
                                 }
                                 .overlay{
                                     switch selectedTab {
                                     case "L":
-                                        LShell(selectedElement: selectedElement)
+                                        LShell(selectedElement: selectedElement) .scaleEffect(0.8)
                                     case "M":
                                         MShell(selectedElement: selectedElement)
                                             .scaleEffect(0.8)
                                     case "N":
                                         NShell(selectedElement: selectedElement)
-                                            .scaleEffect(0.8)
+                                            .scaleEffect(0.7)
                                     case "O":
                                         OShell(selectedElement: selectedElement)
-                                            .scaleEffect(0.8)
+                                            .scaleEffect(0.7)
                                     case "P":
                                         PShell(selectedElement: selectedElement)
                                             .scaleEffect(0.8)
@@ -83,7 +97,7 @@ struct ElectronicConfiguration: View {
                             
 
                         }
-                        .offset(y:-1 * screenHeigth * 0.007)
+                        .offset(y:-1 * screenHeigth * 0.015)
                     }
                 }
                 .scaleEffect(isIPhone ? 0.8:1)
@@ -95,6 +109,7 @@ struct ElectronicConfiguration: View {
                 
             }
             .onAppear {
+                opacityController()
                 startTimer()
                 
             }
@@ -141,6 +156,7 @@ struct ElectronicConfiguration: View {
             selectedTab = key
             Index = index
             stopTimer()
+            opacityController()
             // Restart the bounce animation for the new selection
             withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
                 isBouncing = true
@@ -187,10 +203,10 @@ struct ElectronicConfiguration: View {
            
                 Capsule()
                     .fill(spdfColors[i])
-                    .frame(width:screenWidth * 0.06,height: screenWidth * 0.03)
+                    .frame(width:screenWidth * 0.05,height: screenWidth * 0.025)
                     .overlay{
-                        Text("\(spdfSymbols[i]) = \(subshellConfiguration(for: selectedElement)[index][i])")
-                            .font(.custom(atomSymbolFont, size: 14))
+                        Text("\(spdfSymbols[i]) - \(subshellConfiguration(for: selectedElement)[index][i])")
+                            .font(.custom(atomSymbolFont, size:isIPhone ? 13:14))
                     }
             }
             .onAppear{
@@ -200,11 +216,19 @@ struct ElectronicConfiguration: View {
         .foregroundColor(contentFontColor)
         
     }
+    
+    private func opacityController(){
+        for i in 0..<isOpcitiesController.count{
+            isOpcitiesController[i] = (i == Index)
+        }
+    }
+    
     private func startTimer() {
         
         timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
             Index = (Index + 1) % nonZeroGetShellElectronData(selectedElement: selectedElement).count
             selectedTab = shellSymbols[Index]
+            opacityController()
             print("Selected Tab Updated: \(selectedTab)")
         }
     }
