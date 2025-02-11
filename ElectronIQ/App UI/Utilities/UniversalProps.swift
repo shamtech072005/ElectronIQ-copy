@@ -8,6 +8,8 @@ import SwiftUI
 
 let screenWidth: CGFloat = UIScreen.main.bounds.width // measures the width of the screen
 let screenHeigth: CGFloat = UIScreen.main.bounds.width // measures the height of the screen
+
+
 var isIPhone: Bool {
     UIDevice.current.userInterfaceIdiom == .phone
 }
@@ -25,5 +27,7 @@ let spdfOrdering:[Color] = [.s1,.s1,.p1,.s1,.p1,.d1,.s1,.p1,.d1,.F_1,.s1,.p1,.d1
 let content:[String]=["1s","2s","2p","3s","3p","3d","4s","4p","4d","4f","5s","5p","5d","5f","6s","6p","6d","7s","7p"]
 
 let APR: [Int] = [0, 1, 2, 3, 4, 6, 5, 7, 10,8,11,14,9,12,15,17,13,16,18]
+
+let spdfNumber:[Int]=[1,2,3,4,5,6,7]
 
 let spdfSymbols:[String] = ["S","P","D","F"]

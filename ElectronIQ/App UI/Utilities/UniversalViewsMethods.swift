@@ -88,3 +88,7 @@ func aufbaPrinciple(for selectedElement: Int) -> [Int] {
 }
 
 
+func randomElement(from array: [String]) -> String? {
+    return array.randomElement()
+}
+

@@ -21,23 +21,24 @@ struct ElectronicConfiguration: View {
             ZStack {
                 // Backgrounds and atomic structure rendering
                 AppBackground()
-                viewBackgroundColor(selectedElement: selectedElement)
+                viewBackgroundColor()
                 Group{
                     HStack(spacing:50){
                         VStack(spacing:-20){
-                            contentHeader(content: "Electronic Configuration")
+                            contentHeader(content: "Bhor Model")
                                 .zIndex(1)
                                 .scaleEffect(1.3)
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.atomBackground)
                                 .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
                                 .overlay{
-                                    renderAtomStructure(opacityController:$isOpcitiesController, selectedElement: selectedElement)
+                                    renderAtomStructure(opacityController:$isOpcitiesController, selectedElement: $selectedElement)
                                    
                                 }
                             HStack {
                                 ForEach(0..<nonZeroGetShellElectronData(selectedElement: selectedElement).count, id: \.self) { shell in
                                     SubShellButton(key: shellSymbols[shell], index: shell)
+                                        .opacity(isOpcitiesController[shell] ? 1:0.7)
                                 }
                             }
                             .scaleEffect(1.2)
@@ -51,21 +52,8 @@ struct ElectronicConfiguration: View {
                                 .fill(.atomBackground)
                                 .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
                                 .overlay(alignment:.bottom){
-                                    ZStack{
-                                        Capsule().fill(elementCardColor[selectedElement]).frame(width:screenWidth * 0.3,height:screenWidth * 0.055)
-                                            .overlay(alignment:.top){
-                                                RoundedRectangle(cornerRadius: 10).fill(.atomBackground).frame(width:screenWidth * 0.15,height:screenWidth * 0.02)
-                                                    
-                                                    .overlay{
-                                                        Text("\(selectedTab) Sub Shell")
-                                                            .font(.custom(atomSymbolFont, size:isIPhone ? 12:14))
-                                                    }
-                                                    .offset(y:-10)
-                                            }
-                                        spdfScoreBoard(index: Index)
-                                          
-                                    }
-                                    .padding(.bottom,20)
+                                    spdfBoard
+                                        .padding(.bottom,isIPhone ? 15:20)
                                 }
                                 .overlay{
                                     switch selectedTab {
@@ -100,10 +88,16 @@ struct ElectronicConfiguration: View {
                         .offset(y:-1 * screenHeigth * 0.015)
                     }
                 }
-                .scaleEffect(isIPhone ? 0.8:1)
+                .scaleEffect(isIPhone ? 0.7:0.8)
                 .offset(y:screenHeigth*0.03)
                 Header(content: "\(elementsNames[selectedElement]) - \(elementsNumber[selectedElement])", selectedElement: selectedElement)
-               
+                HStack(spacing:isIPhone ? screenWidth * 0.575:screenWidth * 0.65) {
+                    ElementNavigatorLeft(selectedElement: $selectedElement)
+                    ElementNavigatorRight(selectedElement: $selectedElement)
+                }
+                
+                .scaleEffect(1.3)
+                .offset(y:screenWidth * 0.03)
 
                 
                 
@@ -197,26 +191,32 @@ struct ElectronicConfiguration: View {
             .foregroundStyle(contentFontColor)
     }
     @ViewBuilder
-    func spdfScoreBoard(index : Int) -> some View {
-        HStack{
-            ForEach(0..<subshellConfiguration(for: selectedElement)[index].count,id:\.self){i in
-           
+    func spdfScoreBoard(index: Int) -> some View {
+        let subshellConfig = subshellConfiguration(for: selectedElement)
+        let subshellRow = subshellConfig[index]
+        
+        HStack {
+            ForEach(0..<subshellRow.count, id: \.self) { i in
+                let subshellValue = subshellRow[i]
+                let color = subshellValue == 0 ? Color.gray : spdfColors[i]
+                
                 Capsule()
-                    .fill(spdfColors[i])
-                    .frame(width:screenWidth * 0.05,height: screenWidth * 0.025)
-                    .overlay{
-                        Text("\(spdfSymbols[i]) - \(subshellConfiguration(for: selectedElement)[index][i])")
-                            .font(.custom(atomSymbolFont, size:isIPhone ? 13:14))
+                    .fill(color)
+                    .frame(width: screenWidth * 0.05, height: screenWidth * 0.025)
+                    .overlay {
+                        HStack(spacing: 0) {
+                            Text("\(spdfNumber[index])\(spdfSymbols[i].lowercased())")
+                                .font(.custom(atomSymbolFont, size: isIPhone ? 13 : 14))
+                            Text("\(subshellValue)")
+                                .font(.custom(atomSymbolFont, size: isIPhone ? 12 : 13))
+                                .offset(y: -5)
+                        }
                     }
-            }
-            .onAppear{
-                print(subshellConfiguration(for: selectedElement)[index].count)
             }
         }
         .foregroundColor(contentFontColor)
-        
     }
-    
+
     private func opacityController(){
         for i in 0..<isOpcitiesController.count{
             isOpcitiesController[i] = (i == Index)
@@ -237,11 +237,34 @@ struct ElectronicConfiguration: View {
         timer?.invalidate()
         timer = nil
     }
+    
+    var spdfBoard:some View {
+        ZStack{
+            Capsule().stroke(elementCardColor[selectedElement],style: StrokeStyle(lineWidth: 2)).frame(width:screenWidth * 0.3,height:screenWidth * 0.055)
+                .overlay(alignment:.top){
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 10).fill(.atomBackground).frame(width:screenWidth * 0.15,height:screenWidth * 0.02)
+                        RoundedRectangle(cornerRadius: 10).stroke(elementCardColor[selectedElement],style: StrokeStyle(lineWidth: 2)).frame(width:screenWidth * 0.15,height:screenWidth * 0.02)
+                        
+                            .overlay{
+                                Text("\(selectedTab) Sub Shell")
+                                    .font(.custom(atomSymbolFont, size:isIPhone ? 12:14))
+                                    .foregroundColor(.darkBlack)
+                            }
+                            
+                    }
+                    .offset(y:-10)
+                }
+            spdfScoreBoard(index: Index)
+              
+        }
+
+    }
 }
 
 struct previewProviderForElectronicConfiguration:PreviewProvider{
     static var previews: some View{
-        ElectronicConfiguration(selectedElement: 102)
+        ElectronicConfiguration(selectedElement: 4)
     
     }
 }

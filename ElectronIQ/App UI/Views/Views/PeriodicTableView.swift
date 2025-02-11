@@ -16,7 +16,7 @@ struct PeriodicTableView: View {
             ZStack{
                 ZStack{
                     AppBackground()
-                    viewBackgroundColor(selectedElement: 102)
+                    viewBackgroundColor()
                     Header(content: "", selectedElement: 0)
                     VStack(spacing:5){
                         //row 1

@@ -1,11 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "appIcon2 (1).jpeg",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x"
     },

@@ -35,7 +35,7 @@ struct Contact_us:View {
     var body: some View {
         NavigationStack{
             ZStack{
-                viewBackgroundColor(selectedElement: 102)
+                viewBackgroundColor()
                 VStack{
                     Text("Contact Us").padding().font(.custom(headerFont, size: 30).bold())
                     HStack{

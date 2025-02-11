@@ -11,14 +11,17 @@ struct noNetwork_View: View {
     var body: some View {
         ZStack{
             AppBackground()
+            viewBackgroundColor()
             HStack(){
                 Image(noNetworkImage)
                   .resizable()
-                 .scaledToFit()
+                  .frame(width: screenWidth * 0.4,height: screenWidth * 0.4)
                 VStack{
-                    Text("Error Occured In Connection")
-                        .font(.title)
+                    Text("You are currently in offline mode \nPlease check your internet connection")
+                        .font(.custom(aufbaPrincipleCardFont, size: 18))
+                        .padding()
                 }
+                .foregroundColor(contentFontColor)
                 .padding()
             }
             .padding()

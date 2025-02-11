@@ -1252,107 +1252,214 @@ let oxidationStates: [String] = [
 let valanceShellElectrons: [Int] = [1,2,1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,2,2,2,1,2,2,2,2,1,2,3,4,5,6,7,8,1,2,2,2,1,1,2,1,1,18,1,2,3,4,5,6,7,8,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,2,3,4,5,6,7,8,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3]
                                     
 let elementUses: [[String]] = [
-        ["Rocket fuel", "Ammonia production", "Fuel cells"], // Hydrogen
-        ["Cooling superconductors", "Inflating balloons", "Cryogenics"], // Helium
-        ["Rechargeable batteries", "Mental health medication", "Alloy production"], // Lithium
-        ["Aerospace materials", "X-ray windows", "Nuclear reactors"], // Beryllium
-        ["Glass and ceramics", "Detergents", "Neutron capture therapy"], // Boron
-        ["Steel production", "Organic chemistry", "Fuels"], // Carbon
-        ["Fertilizers", "Explosives", "Cryopreservation"], // Nitrogen
-        ["Breathing", "Steelmaking", "Water treatment"], // Oxygen
-        ["Toothpaste", "Teflon production", "Uranium processing"], // Fluorine
-        ["Signage", "Cryogenics", "High-voltage indicators"], // Neon
-        ["Sodium vapor lamps", "Glass production", "Soap making"], // Sodium
-        ["Aircraft materials", "Medicinal compounds", "Fireworks"], // Magnesium
-        ["Foil", "Cans", "Aerospace structures"], // Aluminum
-        ["Semiconductors", "Optical fibers", "Alloys"], // Silicon
-        ["Alloys", "Pigments", "Fireworks"], // Phosphorus
-        ["Sulfuric acid production", "Vulcanization of rubber", "Fungicides"], // Sulfur
-        ["Disinfectants", "Water purification", "Plastic production"], // Chlorine
-        ["Lighting", "Cryogenics", "Electric insulators"], // Argon
-        ["Table salt", "Chemical production", "Food preservation"], // Potassium
-        ["Construction materials", "Glass production", "Steel production"], // Calcium
-        ["Sparks in fireworks", "Electronics", "Medical imaging"], // Scandium
-        ["Titanium alloys", "Medical implants", "Pigments"], // Titanium
-        ["Steel hardening", "Magnets", "Batteries"], // Vanadium
-        ["Cutting tools", "Electric contacts", "Electroplating"], // Chromium
-        ["Stainless steel", "Magnets", "Pigments"], // Manganese
-        ["Construction steel", "Electromagnets", "Catalysts"], // Iron
-        ["Nickel-based alloys", "Batteries", "Coins"], // Nickel
-        ["Coins", "Jewelry", "Electrical connectors"], // Copper
-        ["Galvanization", "Batteries", "Alloys"], // Zinc
-        ["Rust prevention", "Brass production", "Nuclear reactors"], // Gallium
-        ["Semiconductors", "Alloys", "LEDs"], // Germanium
-        ["Flame retardants", "Optical applications", "Nuclear shielding"], // Arsenic
-        ["Fertilizers", "Match production", "Metal alloys"], // Selenium
-        ["X-ray detectors", "Semiconductors", "Photovoltaic cells"], // Bromine
-        ["Refrigerants", "Plasma displays", "Ion propulsion"], // Krypton
-        ["Nuclear reactors", "Electrical switches", "Alloys"], // Rubidium
-        ["Glass strengthening", "Catalysts", "Specialty lighting"], // Strontium
-        ["Electronics", "Aerospace materials", "Magnets"], // Yttrium
-        ["Ceramics", "Superconductors", "Catalysts"], // Zirconium
-        ["Magnets", "Steelmaking", "Medical imaging"], // Niobium
-        ["Cutting tools", "Lightbulb filaments", "Aerospace components"], // Molybdenum
-        ["Pigments", "Magnets", "Nuclear control rods"], // Technetium
-        ["X-ray targets", "Catalysts", "Hard alloys"], // Ruthenium
-        ["Jewelry", "Catalysts", "Hard disk coatings"], // Rhodium
-        ["Jewelry", "Electroplating", "Electrical contacts"], // Palladium
-        ["Jewelry", "Currency", "Electronics"], // Silver
-        ["Batteries", "Pigments", "Alloys"], // Cadmium
-        ["Radiation shielding", "X-ray detectors", "Semiconductors"], // Indium
-        ["Alloys", "Semiconductors", "Radiation shielding"], // Tin
-        ["Anti-corrosion coatings", "Optical glass", "Pigments"], // Antimony
-        ["Electronics", "Catalysts", "Pigments"], // Tellurium
-        ["Water purification", "Disinfectants", "Pharmaceuticals"], // Iodine
-        ["Lighting", "Cryogenics", "Ion propulsion"], // Xenon
-        ["Laser materials", "Electronics", "Superconductors"], // Cesium
-        ["Glassmaking", "Fertilizers", "Explosives"], // Barium
-        ["Nuclear reactors", "Electronics", "Magnets"], // Lanthanum
-        ["Magnets", "Catalysts", "Optics"], // Cerium
-        ["Laser materials", "Alloys", "Magnets"], // Praseodymium
-        ["Magnets", "Electronics", "Ceramics"], // Neodymium
-        ["Magnets", "Ceramics", "Optics"], // Promethium
-        ["Nuclear fuel", "Magnets", "Superconductors"], // Samarium
-        ["Magnets", "Ceramics", "Alloys"], // Europium
-        ["Magnets", "Alloys", "Glassmaking"], // Gadolinium
-        ["Magnets", "Alloys", "Electronics"], // Terbium
-        ["Magnets", "Ceramics", "Alloys"], // Dysprosium
-        ["Magnets", "Electronics", "Alloys"], // Holmium
-        ["Magnets", "Electronics", "Alloys"], // Erbium
-        ["Magnets", "Electronics", "Glassmaking"], // Thulium
-        ["Magnets", "Alloys", "Electronics"], // Ytterbium
-        ["Magnets", "Alloys", "Ceramics"], // Lutetium
-        ["Magnets", "Ceramics", "Nuclear applications"], // Hafnium
-        ["Magnets", "Alloys", "Tools"], // Tantalum
-        ["Lightbulb filaments", "Cutting tools", "Aerospace materials"], // Tungsten
-        ["Pigments", "Ceramics", "Magnets"], // Rhenium
-        ["Jewelry", "Catalysts", "Electronics"], // Osmium
-        ["Jewelry", "Electronics", "Catalysts"], // Iridium
-        ["Jewelry", "Currency", "Electronics"], // Platinum
-        ["Coins", "Jewelry", "Electrical conductors"], // Gold
-        ["Batteries", "Alloys", "Pigments"], // Mercury
-        ["Radiation shielding", "Alloys", "Pigments"], // Thallium
-        ["Optical coatings", "Ceramics", "Superconductors"], // Lead
-        ["X-ray imaging", "Semiconductors", "Pigments"], // Bismuth
-        ["Nuclear reactors", "Pigments", "Ceramics"], // Polonium
-        ["Lighting", "Ion propulsion", "Specialty coatings"], // Astatine
-        ["Lighting", "Laser materials", "Ion propulsion"], // Radon
-        ["Nuclear reactors", "Magnets", "Alloys"], // Francium
-        ["Glass production", "Electronics", "Magnets"], // Radium
-        ["Nuclear reactors", "Magnets", "Superconductors"], // Actinium
-        ["Nuclear fuel", "Magnets", "Optics"], // Thorium
-        ["Nuclear reactors", "Magnets", "Superconductors"], // Protactinium
-        ["Nuclear fuel", "Magnets", "Superconductors"], // Uranium
-        ["Nuclear reactors", "Magnets", "Superconductors"], // Neptunium
-        ["Nuclear fuel", "Magnets", "Superconductors"], // Plutonium
-        ["Nuclear reactors", "Magnets", "Superconductors"], // Americium
-        ["Nuclear reactors", "Magnets", "Superconductors"], // Curium
-        ["Nuclear reactors", "Magnets", "Superconductors"], // Berkelium
-        ["Nuclear reactors", "Magnets", "Superconductors"], // Californium
-        ["Scientific research", "Magnets", "Superconductors"], // Einsteinium
-        ["Scientific research", "Magnets", "Superconductors"], // Fermium
-        ["Scientific research", "Magnets", "Superconductors"], // Mendelevium
-        ["Scientific research", "Magnets", "Superconductors"], // Nobelium
-        ["Scientific research", "Magnets", "Superconductors"],
-        ["Scientific research", "Study of heavy elements", "Nuclear science"] // Lawrencium
+    ["Rocket fuel", "Ammonia", "Fuel cells"], // Hydrogen
+    ["Supercooling", "Balloons", "Cryogenics"], // Helium
+    ["Batteries", "Medicine", "Alloys"], // Lithium
+    ["Aerospace", "X-rays", "Reactors"], // Beryllium
+    ["Glass", "Detergents", "Therapy"], // Boron
+    ["Steel", "Chemistry", "Fuel"], // Carbon
+    ["Fertilizer", "Explosives", "Cryo storage"], // Nitrogen
+    ["Breathing", "Steel", "Water treatment"], // Oxygen
+    ["Toothpaste", "Teflon", "Processing"], // Fluorine
+    ["Signs", "Cryogenics", "Indicators"], // Neon
+    ["Lamps", "Glass", "Soap"], // Sodium
+    ["Aircraft", "Medicine", "Fireworks"], // Magnesium
+    ["Foil", "Cans", "Structures"], // Aluminum
+    ["Chips", "Fibers", "Alloys"], // Silicon
+    ["Alloys", "Pigments", "Fireworks"], // Phosphorus
+    ["Acid", "Rubber", "Fungicides"], // Sulfur
+    ["Disinfectant", "Purification", "Plastics"], // Chlorine
+    ["Lighting", "Cryo", "Insulators"], // Argon
+    ["Salt", "Chemicals", "Preservation"], // Potassium
+    ["Construction", "Glass", "Steel"], // Calcium
+    ["Fireworks", "Electronics", "Imaging"], // Scandium
+    ["Alloys", "Implants", "Pigments"], // Titanium
+    ["Steel", "Magnets", "Batteries"], // Vanadium
+    ["Tools", "Contacts", "Plating"], // Chromium
+    ["Steel", "Magnets", "Pigments"], // Manganese
+    ["Steel", "Magnets", "Catalysts"], // Iron
+    ["Alloys", "Batteries", "Coins"], // Nickel
+    ["Coins", "Jewelry", "Connectors"], // Copper
+    ["Galvanizing", "Batteries", "Alloys"], // Zinc
+    ["Coating", "Brass", "Reactors"], // Gallium
+    ["Chips", "Alloys", "LEDs"], // Germanium
+    ["Retardants", "Optics", "Shielding"], // Arsenic
+    ["Fertilizer", "Matches", "Alloys"], // Selenium
+    ["X-rays", "Chips", "Solar cells"], // Bromine
+    ["Coolants", "Displays", "Propulsion"], // Krypton
+    ["Reactors", "Switches", "Alloys"], // Rubidium
+    ["Glass", "Catalysts", "Lighting"], // Strontium
+    ["Electronics", "Aerospace", "Magnets"], // Yttrium
+    ["Ceramics", "Superconductors", "Catalysts"], // Zirconium
+    ["Magnets", "Steel", "Imaging"], // Niobium
+    ["Tools", "Filaments", "Aerospace"], // Molybdenum
+    ["Pigments", "Magnets", "Control rods"], // Technetium
+    ["X-rays", "Catalysts", "Hard alloys"], // Ruthenium
+    ["Jewelry", "Catalysts", "Disks"], // Rhodium
+    ["Jewelry", "Plating", "Contacts"], // Palladium
+    ["Jewelry", "Coins", "Electronics"], // Silver
+    ["Batteries", "Pigments", "Alloys"], // Cadmium
+    ["Shielding", "X-rays", "Chips"], // Indium
+    ["Alloys", "Chips", "Shielding"], // Tin
+    ["Coating", "Glass", "Pigments"], // Antimony
+    ["Chips", "Catalysts", "Pigments"], // Tellurium
+    ["Purification", "Disinfectant", "Medicine"], // Iodine
+    ["Lighting", "Cryo", "Propulsion"], // Xenon
+    ["Lasers", "Electronics", "Superconductors"], // Cesium
+    ["Glass", "Fertilizers", "Explosives"], // Barium
+    ["Reactors", "Electronics", "Magnets"], // Lanthanum
+    ["Magnets", "Catalysts", "Optics"], // Cerium
+    ["Lasers", "Alloys", "Magnets"], // Praseodymium
+    ["Magnets", "Chips", "Ceramics"], // Neodymium
+    ["Magnets", "Ceramics", "Optics"], // Promethium
+    ["Fuel", "Magnets", "Superconductors"], // Samarium
+    ["Magnets", "Ceramics", "Alloys"], // Europium
+    ["Magnets", "Alloys", "Glass"], // Gadolinium
+    ["Magnets", "Alloys", "Electronics"], // Terbium
+    ["Magnets", "Ceramics", "Alloys"], // Dysprosium
+    ["Magnets", "Electronics", "Alloys"], // Holmium
+    ["Magnets", "Electronics", "Alloys"], // Erbium
+    ["Magnets", "Electronics", "Glass"], // Thulium
+    ["Magnets", "Alloys", "Electronics"], // Ytterbium
+    ["Magnets", "Alloys", "Ceramics"], // Lutetium
+    ["Magnets", "Ceramics", "Reactors"], // Hafnium
+    ["Magnets", "Alloys", "Tools"], // Tantalum
+    ["Filaments", "Tools", "Aerospace"], // Tungsten
+    ["Pigments", "Ceramics", "Magnets"], // Rhenium
+    ["Jewelry", "Catalysts", "Chips"], // Osmium
+    ["Jewelry", "Chips", "Catalysts"], // Iridium
+    ["Jewelry", "Coins", "Chips"], // Platinum
+    ["Coins", "Jewelry", "Conductors"], // Gold
+    ["Batteries", "Alloys", "Pigments"], // Mercury
+    ["Shielding", "Alloys", "Pigments"], // Thallium
+    ["Optics", "Ceramics", "Superconductors"], // Lead
+    ["X-rays", "Chips", "Pigments"], // Bismuth
+    ["Reactors", "Pigments", "Ceramics"], // Polonium
+    ["Lighting", "Propulsion", "Coatings"], // Astatine
+    ["Lighting", "Lasers", "Propulsion"], // Radon
+    ["Reactors", "Magnets", "Alloys"], // Francium
+    ["Glass", "Chips", "Magnets"], // Radium
+    ["Reactors", "Magnets", "Superconductors"], // Actinium
+    ["Fuel", "Magnets", "Optics"], // Thorium
+    ["Reactors", "Magnets", "Superconductors"], // Protactinium
+    ["Fuel", "Magnets", "Superconductors"], // Uranium
+    ["Reactors", "Magnets", "Superconductors"], // Neptunium
+    ["Fuel", "Magnets", "Superconductors"], // Plutonium
+    ["Reactors", "Magnets", "Superconductors"], // Americium
+    ["Reactors", "Magnets", "Superconductors"], // Curium
+    ["Reactors", "Magnets", "Superconductors"], // Berkelium
+    ["Reactors", "Magnets", "Superconductors"], // Californium
+    ["Research", "Magnets", "Superconductors"], // Einsteinium
+    ["Research", "Magnets", "Superconductors"], // Fermium
+    ["Research", "Magnets", "Superconductors"], // Mendelevium
+    ["Research", "Magnets", "Superconductors"], // Nobelium
+    ["Research", "Study", "Nuclear"], // Lawrencium
+    ["Research", "Study", "Nuclear"]
+]
+
+
+let elementUsesVediosLink:[String] = [
+    "https://www.youtube.com/shorts/H808apdGzXk",//H
+    "https://www.youtube.com/shorts/adOfHtA0vgw",//he
+    "https://www.youtube.com/shorts/yGDkiUAwxRs",//li
+    "https://www.youtube.com/shorts/D6BchzYML0M",//be
+    "https://www.youtube.com/shorts/svfpG-NgO3o",//b
+    "https://www.youtube.com/shorts/DJxF6MOYYu8",//c
+    "https://www.youtube.com/shorts/dak8kmL348w",//n
+    "https://www.youtube.com/shorts/Z6rhk95-FVU",//o
+    "https://www.youtube.com/shorts/Dd349NWrNyo",//f
+    "https://www.youtube.com/shorts/gloS2lc7j3E",//ne
+    "https://www.youtube.com/shorts/Bd2iI1A1Ya0",//na
+    "https://www.youtube.com/shorts/kVdmVkkDulM",//mg
+    "https://www.youtube.com/shorts/5T8jamtBhJA",//al
+    "https://www.youtube.com/shorts/GF2z9LewLEo",//si
+    "https://www.youtube.com/shorts/uRl5A1TnP64",//phosphorous
+    "https://www.youtube.com/shorts/htbVB6ILHPI",//sulfur
+    "https://www.youtube.com/watch?v=mY6skQnW0i8",//cholorine
+    "https://www.youtube.com/watch?v=rK_m7sSn-yo",//argon
+    "https://www.youtube.com/shorts/cRChlWZkAXs",//potassium
+    "https://www.youtube.com/watch?v=HP0UPkMF1gA",//calcium
+    "https://www.youtube.com/shorts/c3jOSjk3KdA",//scandium
+    "https://www.youtube.com/shorts/xgUwncDet30",//titanium
+    "https://www.youtube.com/shorts/pVDxGtISlco",//vanadium
+    "https://www.youtube.com/shorts/b7ucW6T2tRE",//chromium
+    "https://www.youtube.com/shorts/FtHmbzc5dwo",//manganese
+    "https://www.youtube.com/watch?v=XV609o_o9kg",//iron
+    "https://www.youtube.com/shorts/n3B25em1PZU",//cobalt
+    "https://www.youtube.com/shorts/tBl6PNKaY2g",//nickle
+    "https://www.youtube.com/watch?v=jP_t1lo0ZgA",//copper
+    "https://www.youtube.com/watch?v=TuJXgMex85g",//zinc
+    "https://www.youtube.com/shorts/nqedbR9SKMA",//gallium
+    "https://www.youtube.com/shorts/hOkrL0VaqXA",//germinium
+    "https://www.youtube.com/shorts/fQR-i-hiQe0",//arsenic
+    "https://www.youtube.com/watch?v=cc26zFE8X1k",//selenium
+    "https://www.youtube.com/shorts/eLvXS6J_ETQ",//bromine
+    "https://www.youtube.com/watch?v=il4OOY7Zseg",//krypton
+    "https://www.youtube.com/watch?v=0XLGopBovoI",//rubidium
+    "https://www.youtube.com/watch?v=d5ztPGrsgNQ",//strontium
+    "https://www.youtube.com/watch?v=NxbOQ1FhqdQ",//yttrium
+    "https://www.youtube.com/watch?v=gNJE2MPktvg",//zirconium
+    "https://www.youtube.com/watch?v=ynfGLg9_ic8",//nobidium
+    "https://www.youtube.com/watch?v=Diu01OdWh44",//molybedinium
+    "https://www.youtube.com/watch?v=ud5c1TVkcnU",//technitium
+    "https://www.youtube.com/watch?v=wl5ZYb0hDTc",//ruthenium
+    "https://www.youtube.com/watch?v=ZBO1F3Z9Csk",//rhodium
+    "https://youtu.be/R09uuzclDI0",//palladium
+    "https://www.youtube.com/watch?v=4oyKUt4nPwc",//silver
+    "https://www.youtube.com/watch?v=boRius1DYdQ",//cadmium
+    "https://www.youtube.com/watch?v=TviX7V-ay5I",//indium
+    "https://www.youtube.com/watch?v=qht_NDXCsw4",//tin
+    "https://www.youtube.com/watch?v=tm37Ybya1ts",//antimony
+    "https://www.youtube.com/watch?v=5ChFbVu4Mpk",//tellurium
+    "https://www.youtube.com/watch?v=H9ceTN-4PN0",//iodine
+    "https://youtu.be/Ejoct_6pQ74",//xenon
+    "https://www.youtube.com/watch?v=5aD6HwUE2c0",//caesium
+    "https://youtu.be/9srJdQU3NOo",//barium
+    "https://www.youtube.com/watch?v=Q21clW0s0B8",//lanthanum
+    "https://www.youtube.com/watch?v=frD3126ry8o",//cerium
+    "https://youtu.be/IL06CzXF3ns",//paresmodium
+    "https://youtu.be/XZZDy_R2h7E",//neodymium
+    "https://youtu.be/HplP_MY78NQ",//promethium
+    "https://www.youtube.com/watch?v=LpTkBg8HpvY",//samarium
+    "https://www.youtube.com/watch?v=88YOmg_FUVo",//europium
+    "https://www.youtube.com/watch?v=uUo7pY38fGY",//gadolinium
+    "https://youtu.be/On5LjH9TQxY",//terbium
+    "https://youtu.be/hFfR_qOSa-8",//dysprosium
+    "https://www.youtube.com/watch?v=HQahtzCU0BU",//Holmium
+    "https://www.youtube.com/watch?v=E-DY_RT4fJ4",//eurbium
+    "https://youtu.be/vS0vhYdOGMc",//thulium
+    "https://youtu.be/RAqRI9wTuk8",//ytterbium
+    "https://youtu.be/7wrDfRnRHqI",//lutetium
+    "https://youtu.be/Qb9f5uBKJhg",//hafnium
+    "https://youtu.be/51xFP1Yn3g0",//tanthalum
+    "https://youtu.be/dqMY6sdVqf8",//tungsten
+    "https://youtu.be/BIJXqzWiHtI",//rhenium
+    "https://youtu.be/D9C_lbivcn4",//osmium
+    "https://youtu.be/lGy1vGnYAak",//iridium
+    "https://www.youtube.com/watch?v=vhPu-3b0FnY",//platinum
+    "https://www.youtube.com/watch?v=vhPu-3b0FnY",//gold
+    "https://www.youtube.com/watch?v=ayMwyJO9AB4",//mercury
+    "https://www.youtube.com/watch?v=4SVhSZ-rfLM",//thallium
+    "https://www.youtube.com/watch?v=2ERfPN5JLX8",//lead
+    "https://www.youtube.com/watch?v=vyIo-c7VmIM",//bismuth
+    "https://www.youtube.com/watch?v=bbr5yWwsI1o",//polonium
+    "https://www.youtube.com/watch?v=GP8jJgzEmwE",//astatine
+    "https://www.youtube.com/watch?v=mTuC_LrEfbU",//radon
+    "https://www.youtube.com/watch?v=PyFLvSg6ZDw",//francium
+    "https://www.youtube.com/watch?v=I_1XelLa1eo",//radium
+    "https://www.youtube.com/watch?v=rKm0ShaJNFM",//actinum
+    "https://youtu.be/FjHH8Qf3aO4",//thorium
+    "https://www.youtube.com/watch?v=pXH0YECjoZI",//protacinum
+    "https://www.youtube.com/watch?v=0sIHd1Jhtp4",//uranium
+    "https://youtu.be/1D75B0_URbE",//neptunium
+    "https://www.youtube.com/watch?v=5LRK5vOESw8",//plutonium
+    "https://www.youtube.com/watch?v=ls2oAiUo5gQ",//americium
+    "https://www.youtube.com/watch?v=55R1JzEjISw",//curium
+    "https://youtu.be/7p1D9C1qkZY",//berkilium
+    "https://www.youtube.com/watch?v=Fk7f0h0n7tw",//californium
+    "https://www.youtube.com/watch?v=Hq1kz09K2W4",//einstenium
+    "https://www.youtube.com/watch?v=zNOeVoHnkYg",//fermium
+    "https://www.youtube.com/watch?v=OGZa7iiyg8A",//mendelvium
+    "https://www.youtube.com/watch?v=tzZjHz4vhrI",//nobelium
+    "https://www.youtube.com/watch?v=ab9E5ZbfAQU",//lawrentium
 ]

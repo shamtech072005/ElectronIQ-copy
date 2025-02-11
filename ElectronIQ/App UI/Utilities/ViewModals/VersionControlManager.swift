@@ -10,7 +10,8 @@ import Foundation
 import Combine
 
 struct VersionInfo: Codable {
-    let version: String
+    let version_code: String
+    let url:String
 }
 
 class VersionViewModel: ObservableObject {
@@ -20,7 +21,7 @@ class VersionViewModel: ObservableObject {
 
     // Fetch version from API
     func fetchVersion() {
-        guard let url = URL(string: "https://gmx6yvrje6.execute-api.ap-southeast-2.amazonaws.com/prod/version") else {
+        guard let url = URL(string: "https://yrvi6y00u8.execute-api.us-west-2.amazonaws.com/dev/chemistry_app_data") else {
             error = "Invalid URL"
             return
         }
@@ -47,9 +48,12 @@ class VersionViewModel: ObservableObject {
                 let decoder = JSONDecoder()
                 if let decodedData = try? decoder.decode(VersionInfo.self, from: data) {
                     self.versionInfo = decodedData
+                    print(decodedData)
                 } else {
                     self.error = "Failed to decode data."
+                    print("not connect")
                 }
+                
             }
         }
         .resume()
@@ -75,7 +79,7 @@ struct VersionView: View {
                     .padding(.trailing,20)
             }
             // Show version info once fetched
-            else if let version = viewModel.versionInfo?.version {
+            else if let version = viewModel.versionInfo?.version_code {
                 Text("Version \(version)")
                     .font(.custom(versionFont,size: 10 ))
                 Text("Powered by Hope3 Foundation")
@@ -96,5 +100,46 @@ struct VersionView: View {
 }
 
 #Preview {
-    PeriodicTableView()
+    Onboarding()
 }
+//
+//import Foundation
+//import Combine
+//
+//struct AppVersion: Codable {
+//    let version_code: String
+//    let url: String
+//}
+//
+//class AppVersionViewModel: ObservableObject {
+//    @Published var appVersion: AppVersion?
+//    private var cancellables = Set<AnyCancellable>()
+//    
+//    func fetchAppVersion() {
+//        guard let url = URL(string: "your_api_endpoint_here") else { return }
+//        
+//        URLSession.shared.dataTaskPublisher(for: url)
+//            .map { $0.data }
+//            .decode(type: AppVersion.self, decoder: JSONDecoder())
+//            .receive(on: DispatchQueue.main)
+//            .sink(receiveCompletion: { _ in },
+//                  receiveValue: { [weak self] version in
+//                self?.appVersion = version
+//            })
+//            .store(in: &cancellables)
+//    }
+//}
+//
+//struct ContentView: View {
+//    @StateObject private var versionViewModel = AppVersionViewModel()
+//    
+//    var body: some View {
+//        VStack {
+//            Text("App Version: \(versionViewModel.appVersion?.version_code ?? "Loading...")")
+//            Text("Support URL: \(versionViewModel.appVersion?.url ?? "")")
+//        }
+//        .onAppear {
+//            versionViewModel.fetchAppVersion()
+//        }
+//    }
+//}

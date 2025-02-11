@@ -11,11 +11,12 @@ import SwiftUI
 
 struct UpdateView: View {
     @State var isBouncing: Bool = false
-
+    @StateObject private var viewModel = VersionViewModel()
+    @State var selectedElement: Int
     var body: some View {
         ZStack {
             AppBackground()
-
+            viewBackgroundColor()
             HStack {
                 Image(updatePicture)  // Ensure your image name is correct
                     .resizable()
@@ -29,23 +30,22 @@ struct UpdateView: View {
 
                     Text("Please update to the latest version")
                         .multilineTextAlignment(.center)
-
-                    Button(action: {
-                        // Your update action goes here
-                        print("Update button tapped")
-                    }, label: {
-                        Text("Update")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.red)
-                            .cornerRadius(10)
-                            .scaleEffect(isBouncing ? 0.9 : 1.1)
-                    })
-                    .onAppear {
-                        withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
-                            isBouncing.toggle()
+                    Link(destination:URL(string: "\(String(describing: viewModel.versionInfo?.url))")!) {
+                            Text("Update")
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.red)
+                                .cornerRadius(30)
+                                .scaleEffect(isBouncing ? 0.9 : 1.1)
                         }
-                    }
+                        .onAppear {
+                            withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
+                                isBouncing.toggle()
+                            }
+                        }
+
+                   
+                    
                 }
                 .padding()
             }
@@ -56,5 +56,5 @@ struct UpdateView: View {
 
 
 #Preview {
-    UpdateView()
+    UpdateView(selectedElement: 10)
 }

@@ -21,7 +21,7 @@ struct Onboarding: View {
             if networkMonitor.isConnected {
                 if viewModel.isLoading {
                     ZStack{
-                        viewBackgroundColor(selectedElement: 102)
+                        viewBackgroundColor()
                         VStack {
                             ProgressView()
                                 .tint(colorScheme == .dark ? .gray : .gray) // Changes the progress indicator color
@@ -35,10 +35,10 @@ struct Onboarding: View {
                     }
                     
                 } else if let versionInfo = viewModel.versionInfo {
-                    if versionInfo.version == "1.0.0" {
+                    if versionInfo.version_code == "1.0.0" {
                         PeriodicTableView()
                     } else {
-                        UpdateView()
+                        UpdateView(selectedElement: 0)
                     }
                 } else {
                     Text("Failed to fetch version info.")

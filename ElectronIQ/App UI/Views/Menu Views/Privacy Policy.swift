@@ -26,7 +26,7 @@ struct PrivacyPolicyView: View {
     var body: some View {
        NavigationStack {
                ZStack{
-                   viewBackgroundColor(selectedElement: 102)
+                   viewBackgroundColor()
                    ScrollView {
                        VStack(alignment: .center, spacing: 20) {
                         header
@@ -137,19 +137,9 @@ struct PersonalDataSection: View {
                 .font(.title2)
                 .bold()
             
-            Text("Types of Data Collected")
-                .font(.title3)
-                .bold()
-            
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Personal Data")
-                    .bold()
-                Text("While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You.")
-                
-                Text("Camera Access")
-                    .bold()
-                Text("Our application requires access to the device's camera to enable facial recognition. This feature is used solely for client-side operations, and no camera data is shared with third parties or stored externally.")
-            }
+            Text("No personal data is collected")
+             
+                .foregroundColor(.secondary)
         }
     }
 }
@@ -164,6 +154,9 @@ struct GDPRSection: View {
             Text("Your Rights under the GDPR")
                 .font(.title3)
                 .bold()
+            Text("No personal data is collected")
+             
+                .foregroundColor(.secondary)
             
             VStack(alignment: .leading, spacing: 12) {
                 rightItem(title: "Request access", description: "The right to access, update or delete your Personal Data.")

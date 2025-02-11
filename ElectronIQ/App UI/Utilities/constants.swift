@@ -13,7 +13,7 @@ let email = "email"
 let linkedin = "linkedIn"
 let instagram = "instagram"
 let facebook = "facebook"
-//------------------Font---------------------------
+//------------------Font Color---------------------------
 let standardFontColor:Color = .black
 let HeaderFontColor:Color = .white
 //drawer color

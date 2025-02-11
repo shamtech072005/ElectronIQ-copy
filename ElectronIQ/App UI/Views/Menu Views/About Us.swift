@@ -15,64 +15,65 @@ struct TeamMember: Identifiable {
     let role: String
     let imageSystemName: String
     let description: String
+    let link:String
 }
 
 struct AboutUsView: View {
     @State private var isDrawerOpen: Bool = false
     let teamMembers = [
         TeamMember(
-            name: "Mr.Sham Edward J",
+            name: "Mr. Sham Edward J",
             role: "Developer",
-            imageSystemName: "person.circle.fill",
-            description: "Arjava India Tech Private Ltd., Chennai"
+            imageSystemName: "keyboard.chevron.compact.down.fill",
+            description: "Arjava India Tech Private Ltd., Chennai", link: "https://www.linkedin.com/in/sham-edward-5842b8287/"
         ),
         TeamMember(
-            name: "Mr.Harrish Muthuram L M",
+            name: "Mr. Harrish Muthuram L M",
             role: "Designer",
             imageSystemName: "pencil.and.ruler.fill",
-            description: "Arjava India Tech Private Ltd., Chennai"
+            description: "Arjava India Tech Private Ltd., Chennai", link: "https://www.linkedin.com/in/harrish-lm/"
         ),
         TeamMember(
-            name: "Ms.Shruthi Vairavan",
+            name: "Ms. Shruthi Vairavan",
             role: "Creative Spark",
-            imageSystemName: "lightbulb.max.fill",
-            description: "11th grade, Eastlake High School, WA, USA."
+            imageSystemName:"lightbulb.max.fill",
+            description: "11th Grade, Eastlake High School, WA, USA", link: "https://www.linkedin.com/in/palani-vairavan-84b3921/"
         ),
         TeamMember(
-            name: "Mr.Raghul Vijaiyan",
+            name: "Mr. Raghul Vijayan",
             role: "Test Engineer",
-            imageSystemName: "list.clipboard.fill",
-            description: "Test Specialist at Cognizant , Chennai"
+            imageSystemName: "list.bullet.clipboard.fill",
+            description: "Validation Test Lead, Cognizant, Chennai", link: "https://www.linkedin.com/in/raghul-vijayan/"
         ),
         TeamMember(
-            name: "Mr.Siranjeevan C",
+            name: "Mr. Siranjeevan C",
             role: "Data Aggregator",
-            imageSystemName: "figure.2.right.holdinghands",
-            description: "Studying BCA 1st year in Nachiappa Swamigal Arts And Science College"
+            imageSystemName: "books.vertical.fill",
+            description: "I Year - BCA, Nachiappa Swamigal Arts & Science College, Karaikudi", link: "https://www.linkedin.com/company/arjavatech/posts/?feedView=all"
         ),
         TeamMember(
             name: "Mr. Pitchaimani Rajaram",
             role: "Development Manager",
             imageSystemName: "briefcase.fill",
-            description: "Arjava India Tech Private Ltd., Chennai"
+            description: "Arjava India Tech Private Ltd., Chennai", link: "https://www.linkedin.com/in/mani-rr-b93397201/"
         ),
         TeamMember(
-            name: "Mr.Arivarasan V",
+            name: "Mr. Arivarasan V",
             role: "Mentor",
-            imageSystemName: "lightbulb.max.fill",
-            description: "Science Communicator"
+            imageSystemName: "brain.head.profile.fill",
+            description: "Science Communicator, Tamil Nadu", link: "https://www.linkedin.com/company/arjavatech/posts/?feedView=all"
         ),
         TeamMember(
-            name: "Dr.Meenakshi Sundaram",
+            name: "Dr. Meenakshi Sundaram",
             role: "Mentor",
-            imageSystemName: "lightbulb.max.fill",
-            description: "Applied Data Scientist, Semiconductor Process Engineering, Computational Modeler , USA"
+            imageSystemName: "brain.head.profile.fill",
+            description: "Applied Data Scientist, Computational Modeler, Intel Inc., Portland, USA", link: "https://www.linkedin.com/in/meenakshi-sundaram/"
         ),
         TeamMember(
-            name: "Mr.Palani Vairavan",
+            name: "Mr. Palani Vairavan",
             role: "Advisor",
             imageSystemName: "crown.fill",
-            description: "Engineering Manager(AWS),Amazon Inc., Seattle ,USA"
+            description: "Engineering Manager(AWS), Amazon Inc., Seattle, USA", link: "https://www.linkedin.com/in/palani-vairavan-84b3921/"
         )
     ]
     
@@ -83,7 +84,7 @@ struct AboutUsView: View {
     var body: some View {
         NavigationStack{
             ZStack{
-                viewBackgroundColor(selectedElement: 102)
+                viewBackgroundColor()
                 
                 VStack(spacing: 20) {
                     
@@ -167,9 +168,12 @@ struct TeamMemberCard: View {
                             .fontWeight(.medium)
                             .foregroundColor(.primary)
                         
-                        Text(member.role)
-                            .font(.system(size: min(geometry.size.width * 0.04, 12)))
-                            .foregroundColor(.blue)
+                        Link(destination: URL(string: member.link)!, label: {
+                            Text(member.role)
+                                .font(.system(size: min(geometry.size.width * 0.04, 12)))
+                                .foregroundColor(.blue)
+                        })
+                        
                     }
                 }
                 
@@ -187,6 +191,7 @@ struct TeamMemberCard: View {
                     .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
             )
         }
+       
         .aspectRatio(2.5, contentMode: .fit)
     }
 }
