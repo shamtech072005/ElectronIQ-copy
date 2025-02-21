@@ -7,7 +7,7 @@
 import SwiftUI
 
 let screenWidth: CGFloat = UIScreen.main.bounds.width // measures the width of the screen
-let screenHeigth: CGFloat = UIScreen.main.bounds.width // measures the height of the screen
+
 
 
 var isIPhone: Bool {

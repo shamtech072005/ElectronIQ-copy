@@ -11,19 +11,9 @@ import SwiftUI
 // Drawer menu -> finished
 @ViewBuilder
 func viewBackgroundColor() -> some View {
-//    LinearGradient(
-//        gradient: Gradient(
-//            colors: [
-//                elementCardColors[selectedElement][0],
-//                elementCardColors[selectedElement][1]
-//            ]
-//        ),
-//        startPoint: .top,
-//        endPoint: .bottom
-//    )
-//    .edgesIgnoringSafeArea(.all)
-//    .opacity(0.3)
-    Color.darkGrey.opacity(0.3)
+    @Environment(\.colorScheme) var colorScheme
+    
+    Color.darkGrey.opacity(colorScheme == .light ? 0.5 : 0)
         .edgesIgnoringSafeArea(.all)
 }
 @ViewBuilder
@@ -77,46 +67,65 @@ func drawerButton(isDrawerOpen:Binding<Bool>)->some View{
         .foregroundColor(isDrawerOpen.wrappedValue ? .white:.darkGrey)
     })
     .scaleEffect(isIPhone ? 1:1.5)
-    .offset(x:-1 * screenWidth*0.45,y:isIPhone ? -1 * screenHeigth*0.17: -1 * screenHeigth*0.3)
+    .offset(x:-1 * screenWidth*0.45,y:isIPhone ? -1 * screenWidth*0.17: -1 * screenWidth*0.3)
     
 }
 //########################################################
 @ViewBuilder
 func Header(content:String,selectedElement:Int)->some View{
+    var headerOffset: CGFloat {
+        if isIPhone {
+            print("iphone")
+            return -screenWidth * 0.21
+        } else if screenWidth == 1180.0{
+            print("11 inch")
+            return -screenWidth * 0.325
+        } else if screenWidth == 1366.0{
+            print("13 inch")
+            return -screenWidth * 0.35
+        } else {
+            print("mytab")
+            return -screenWidth * 0.365
+            
+        }
+    }
+    @Environment(\.colorScheme) var colorScheme
     if content == ""{
         ZStack{
             RoundedRectangle(cornerRadius: 20)
                 .fill(.headerBackground).opacity(0.9)
-                .frame(width:screenWidth * 0.5,height: screenHeigth * 0.07)
+                .frame(width:screenWidth * 0.5,height: screenWidth * 0.07)
             
                 .edgesIgnoringSafeArea(.all)
               
             Text("Periodic Table")
                 .font(.custom(headerFont, size:isIPhone ? 24 : 36))
-                .offset(y:screenHeigth * 0.012)
+                .offset(y:screenWidth * 0.012)
 //                .foregroundColor(.white)
-                .foregroundColor(HeaderFontColor)
+                .foregroundColor(Color.headerFont)
                 .bold()
         }
         .scaledToFit()
-        .offset(y:isIPhone ? -1 * screenHeigth * 0.21:-1 * screenHeigth * 0.365)
+        .offset(y:headerOffset)
     }else{
         ZStack{
             RoundedRectangle(cornerRadius: 20)
                 .fill(elementCardColor[selectedElement]).opacity(0.9)
-                .frame(width:screenWidth * 0.5,height:screenHeigth * 0.07)
+                .frame(width:screenWidth * 0.5,height:screenWidth * 0.07)
             
                 .edgesIgnoringSafeArea(.all)
             
             Text(content)
                 .font(.custom(headerFont, size:isIPhone ? 24 : 36))
-                .offset(y:screenHeigth * 0.012)
+                .offset(y:screenWidth * 0.012)
 //                .foregroundColor(.white)
                 .foregroundColor(HeaderFontColor)
             
         }
         .scaledToFit()
-        .offset(y:isIPhone ? -1 * screenHeigth * 0.21:-1 * screenHeigth * 0.365)
+        
+
+        .offset(y:headerOffset)
     }
 }
 
@@ -483,12 +492,12 @@ func elementDetailTableView(selectedElement: Int) -> some View {
                 ScrollView(showsIndicators: true) {
                     VStack(spacing: 5) { // Content inside ScrollView
                         let headings: [String] = [
-                            "Element Name", "Element Symbol",  "Period", "Block",
+                            "Element Name","Common Name", "Element Symbol",  "Period", "Block",
                             "Electronic Configuration", "Melting Point", "Density", "Oxidation State","Group"
                         ]
                         
                         let content = [
-                            elementsNames, elementsSymbols, periods, blocks,
+                            elementsNames,CommonNames, elementsSymbols, periods, blocks,
                             electronicConfigurationContents, meltingPoints, densities, oxidationStates, groups
                         ]
                         
@@ -538,7 +547,7 @@ struct BouncingButton<Destination: View>: View {
                 .foregroundColor(contentFontColor) // Replace with your actual color
                 .background(elementCardColor[selectedElement]) // Replace with your actual color array
                 .cornerRadius(8)
-                .scaleEffect(isBouncing ? 0.95 : 1) // Scale effect for bouncing
+                .scaleEffect(isBouncing ? 1 : 0.9) // Scale effect for bouncing
                 .shadow(color:elementCardColor[selectedElement],radius: isBouncing ? 5 : 0)
                 .onAppear {
                     // Start the bouncing animation
@@ -563,7 +572,7 @@ struct BouncingLink:View {
                 .foregroundColor(contentFontColor) // Replace with your actual color
                 .background(elementCardColor[selectedElement]) // Replace with your actual color array
                 .cornerRadius(8)
-                .scaleEffect(isBouncing ? 0.95 : 1) // Scale effect for bouncing
+                .scaleEffect(isBouncing ? 1 : 0.9) // Scale effect for bouncing
                 .shadow(color:elementCardColor[selectedElement],radius: isBouncing ? 5 : 0)
                 .onAppear {
                     // Start the bouncing animation
@@ -616,7 +625,7 @@ func renderValanceElectron(selectedElement:Int)->some View{
 @ViewBuilder
 func renderNavigationButtons(selectedElement:Int)->some View{
     VStack(spacing:isIPhone ? screenWidth*0.01 : screenWidth * 0.025){
-        BouncingButton(buttonContent: "Bhor Model", selectedElement: selectedElement, destination: ElectronicConfiguration(selectedElement: selectedElement))
+        BouncingButton(buttonContent: "Bohr Model", selectedElement: selectedElement, destination: ElectronicConfiguration(selectedElement: selectedElement))
         BouncingButton(buttonContent: "Aufbau Principle", selectedElement: selectedElement, destination: AufbaIntegerationView(selectedElement: selectedElement))
         BouncingLink(buttonContent: "Watch and Learn", selectedElement: selectedElement)
     }
@@ -868,7 +877,7 @@ struct BouncingBackButton: View {
             .foregroundColor(contentFontColor) // Replace with your actual color
             .background(elementCardColor[selectedElement]) // Replace with your actual color array
             .cornerRadius(20)
-            .scaleEffect(isBouncing ? 1.1 : 1.0) // Scale effect for bouncing
+            .scaleEffect(isBouncing ? 1.2 : 1.0) // Scale effect for bouncing
             .shadow(color:elementCardColor[selectedElement],radius: isBouncing ? 10 : 0)
             .onAppear {
                 // Start the bouncing animation
@@ -882,19 +891,20 @@ struct BouncingBackButton: View {
 struct ElementNavigatorRight: View {
     @Binding var selectedElement: Int
     @State private var isPulsing: Bool = false // State for pulsing animation
-
+   
     var body: some View {
         ZStack {
             Button {
-                // Increment the selected element but ensure it stays within range
-                selectedElement = min(selectedElement + 1, elementCardColor.count - 1)
+                // Use guard to ensure selectedElement stays within a valid range
+                guard selectedElement < elementCardColor.count - 1 else { return }
+                selectedElement += 1
             } label: {
                 let nextIndex = min(selectedElement + 1, elementCardColor.count - 1) // Safe index
 
                 RoundedRectangle(cornerRadius: 5)
                     .fill(elementCardColor[nextIndex])
                     .frame(width: screenWidth * 0.04, height: screenWidth * 0.04)
-                    .scaleEffect(isPulsing ? 1.1 : 1.0) // Apply pulsing effect
+                    .scaleEffect(isPulsing ? 1.2 : 1.0) // Apply pulsing effect
                     .shadow(color: elementCardColor[nextIndex], radius: selectedElement == elementCardColor.count - 1 ? 0 : 5)
                     .animation(
                         .easeInOut(duration: 1.0).repeatForever(autoreverses: true),
@@ -907,30 +917,32 @@ struct ElementNavigatorRight: View {
                         Text(elementsSymbols[nextIndex])
                             .font(.custom(atomSymbolFont, size: isIPhone ? 20 : 25))
                     }
-                    
             }
             .opacity(selectedElement == elementCardColor.count - 1 ? 0.5 : 1) // Dim when at the last element
+            .disabled(selectedElement == elementCardColor.count - 1) // Disable button when at the last element
         }
         .foregroundColor(contentFontColor)
     }
 }
 
+
 struct ElementNavigatorLeft: View {
     @Binding var selectedElement: Int
     @State private var isPulsing: Bool = false // State for pulsing animation
-
+  
     var body: some View {
         ZStack {
             Button {
-                // Decrement the selected element but ensure it stays within range
-                selectedElement = max(selectedElement - 1, 0)
+                // Use guard to ensure selectedElement stays within a valid range
+                guard selectedElement > 0 else { return }
+                selectedElement -= 1
             } label: {
                 let prevIndex = max(selectedElement - 1, 0) // Safe index
 
                 RoundedRectangle(cornerRadius: 5)
                     .fill(elementCardColor[prevIndex])
                     .frame(width: screenWidth * 0.04, height: screenWidth * 0.04)
-                    .scaleEffect(isPulsing ? 1.1 : 1.0) // Apply pulsing effect
+                    .scaleEffect(isPulsing ? 1.2 : 1.0) // Apply pulsing effect
                     .shadow(color: elementCardColor[prevIndex], radius: 5)
                     .animation(
                         .easeInOut(duration: 1.0).repeatForever(autoreverses: true),
@@ -941,9 +953,9 @@ struct ElementNavigatorLeft: View {
                         Text(elementsSymbols[prevIndex])
                             .font(.custom(atomSymbolFont, size: isIPhone ? 20 : 25))
                     }
-                    
             }
             .opacity(selectedElement == 0 ? 0.5 : 1) // Dim when at the first element
+            .disabled(selectedElement == 0) // Disable button when at the first element
         }
         .foregroundColor(contentFontColor)
     }
@@ -953,6 +965,6 @@ struct ElementNavigatorLeft: View {
 
 struct PreviewTester:PreviewProvider{
     static var previews: some View{
-        DetailView(selectedElement: 10)
+        PeriodicTableView()
     }
 }

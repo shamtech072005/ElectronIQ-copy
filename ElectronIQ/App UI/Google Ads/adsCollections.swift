@@ -13,7 +13,7 @@ struct AdBannerView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> GADBannerView {
         let bannerView = GADBannerView(adSize: GADAdSizeFromCGSize(CGSize(width: 320, height: 50))) // Set your desired banner ad size
-        bannerView.adUnitID = "ca-app-pub-7374460951052927/8744038682"
+        bannerView.adUnitID = "ca-app-pub-7374460951052927/2017190647"
         
         // Get the root view controller from the current window scene
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
@@ -40,7 +40,7 @@ class InterstitialAd: NSObject, ObservableObject, GADFullScreenContentDelegate {
         print("Loading interstitial ad...")
         let request = GADRequest()
         // Replace this test ad unit ID with your own
-        GADInterstitialAd.load(withAdUnitID: "ca-app-pub-3940256099942544/4411468910", request: request) { [weak self] ad, error in
+        GADInterstitialAd.load(withAdUnitID: "ca-app-pub-7374460951052927/2742242669", request: request) { [weak self] ad, error in
             guard let self = self else { return }
             if let error = error {
                 print("Failed to load interstitial ad with error: \(error.localizedDescription)")

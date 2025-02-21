@@ -15,6 +15,7 @@ struct ElectronicConfiguration: View {
     @State private var isBouncing = false // Controls the bounce effect for the selected button
     @State private var isOpcitiesController:[Bool] = Array(repeating: true, count: 7)
     @State var Index:Int = 0
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
@@ -25,12 +26,12 @@ struct ElectronicConfiguration: View {
                 Group{
                     HStack(spacing:50){
                         VStack(spacing:-20){
-                            contentHeader(content: "Bhor Model")
+                            contentHeader(content: "Bohr Model")
                                 .zIndex(1)
                                 .scaleEffect(1.3)
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.atomBackground)
-                                .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
+                                .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenWidth * 0.4:screenWidth * 0.35)
                                 .overlay{
                                     renderAtomStructure(opacityController:$isOpcitiesController, selectedElement: $selectedElement)
                                    
@@ -50,7 +51,7 @@ struct ElectronicConfiguration: View {
                                 .scaleEffect(1.3)
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(.atomBackground)
-                                .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenHeigth * 0.4:screenHeigth * 0.35)
+                                .frame(width:isIPhone ? screenWidth * 0.475:screenWidth * 0.45, height:isIPhone ? screenWidth * 0.4:screenWidth * 0.35)
                                 .overlay(alignment:.bottom){
                                     spdfBoard
                                         .padding(.bottom,isIPhone ? 15:20)
@@ -85,11 +86,11 @@ struct ElectronicConfiguration: View {
                             
 
                         }
-                        .offset(y:-1 * screenHeigth * 0.015)
+                        .offset(y:-1 * screenWidth * 0.015)
                     }
                 }
                 .scaleEffect(isIPhone ? 0.7:0.8)
-                .offset(y:screenHeigth*0.03)
+                .offset(y:screenWidth*0.03)
                 Header(content: "\(elementsNames[selectedElement]) - \(elementsNumber[selectedElement])", selectedElement: selectedElement)
                 HStack(spacing:isIPhone ? screenWidth * 0.575:screenWidth * 0.65) {
                     ElementNavigatorLeft(selectedElement: $selectedElement)
@@ -123,7 +124,7 @@ struct ElectronicConfiguration: View {
             .overlay {
                 Button(action: {dismiss()}, label: {BouncingBackButton(selectedElement: selectedElement)})
                     .scaleEffect(isIPhone ? 0.6:1)
-                    .offset(x:isIPhone ? -1 * screenWidth * 0.4:-1 * screenWidth * 0.375,y:isIPhone ? -1 * screenHeigth * 0.17:-1 * screenHeigth * 0.3)
+                    .offset(x:isIPhone ? -1 * screenWidth * 0.4:-1 * screenWidth * 0.375,y:isIPhone ? -1 * screenWidth * 0.17:-1 * screenWidth * 0.3)
                 // Drawer and header overlay
                 Drawer(isDrawerOpen: isDrawerOpen)
                 drawerButton(isDrawerOpen: $isDrawerOpen)
@@ -133,7 +134,7 @@ struct ElectronicConfiguration: View {
             .overlay{
                 if !isIPhone{
                     AdBannerView().frame(width:screenWidth * 0.8,height: 100)
-                        .offset(y:screenHeigth * 0.3)
+                        .offset(y:screenWidth * 0.3)
                 }
             }
         }
@@ -224,14 +225,17 @@ struct ElectronicConfiguration: View {
     }
     
     private func startTimer() {
+        guard !nonZeroGetShellElectronData(selectedElement: selectedElement).isEmpty else { return }
         
         timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
-            Index = (Index + 1) % nonZeroGetShellElectronData(selectedElement: selectedElement).count
+            let maxIndex = nonZeroGetShellElectronData(selectedElement: selectedElement).count - 1
+            Index = min((Index + 1), maxIndex) // Ensure Index stays within bounds
             selectedTab = shellSymbols[Index]
             opacityController()
             print("Selected Tab Updated: \(selectedTab)")
         }
     }
+
 
     private func stopTimer() {
         timer?.invalidate()

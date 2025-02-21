@@ -58,24 +58,13 @@ struct AufbaPrinciple: View {
             }
         }
         .onAppear {
-            resetAnimationWithTimer()
-        }
-        .onChange(of: selectedElement) { _ in
-            
-            resetAnimationWithTimer()
-        } // Ensures animation resets only once when `selectedElement` changes
+            animateElementCardWithTimer()
+
+        }// Ensures animation resets only once when `selectedElement` changes
     }
 
     /// **Resets the animation flags and restarts the animation using a timer**
-    func resetAnimationWithTimer() {
-        timer?.invalidate() // Stop the previous timer before starting a new one
-        timer = nil
-
-        // Immediately reset animation flags to clear any lingering animations
-        isAppearFlags = Array(repeating: false, count: 19)
-        isBumbingFlags = Array(repeating: false, count: 19)
-        animateElementCardWithTimer()
-    }
+ 
 
 
 
@@ -167,6 +156,9 @@ struct AufbaElementCard: View {
 
 struct AufbaIntegerationView:View{
     @State var selectedElement:Int
+    @State private var isAppearFlags = Array(repeating: false, count: 19)
+    @State private var isBumpingFlags = Array(repeating: false, count: 19)
+    @State private var timer1: Timer?
     @State var incrementer:Int = 0
     @State private var isDrawerOpen: Bool = false
     @State private var timer: Timer?
@@ -179,22 +171,12 @@ struct AufbaIntegerationView:View{
                 Header(content: "\(elementsNames[selectedElement]) - \(elementsNumber[selectedElement])", selectedElement: selectedElement)
                 HStack(spacing:isIPhone ? screenWidth * 0.1:screenWidth * 0.12){
                     ElectronicScoreboard(selectedElement: selectedElement)
+                    
                     AufbaPrinciple(selectedElement: $selectedElement)
-                        .scaleEffect(isIPhone ? 1:1.3)
                     incrementerSideBar()
                 }
-                .scaleEffect(0.9)
-                .offset(y:screenWidth * 0.025)
-                HStack(spacing:isIPhone ? screenWidth * 0.575:screenWidth * 0.65) {
-                    ElementNavigatorLeft(selectedElement: $selectedElement)
-                    ElementNavigatorRight(selectedElement: $selectedElement)
-                }
-                .onChange(of: selectedElement) { newValue in
-                    incrementer = 0  // Reset counter
-                    animateIncrementer() // Restart animation
-                }
-                .scaleEffect(1.3)
-                .offset(y:screenWidth * 0.03)
+                .scaleEffect(isIPhone ? 1:1.1)
+                .offset(y:screenWidth * 0.04)
                 
             }
             
@@ -202,7 +184,7 @@ struct AufbaIntegerationView:View{
             .overlay{
                 Button(action: {dismiss()}, label: {BouncingBackButton(selectedElement: selectedElement)})
                     .scaleEffect(isIPhone ? 0.6:1)
-                    .offset(x:isIPhone ? -1 * screenWidth * 0.4:-1 * screenWidth * 0.375,y:isIPhone ? -1 * screenHeigth * 0.17:-1 * screenHeigth * 0.3)
+                    .offset(x:isIPhone ? -1 * screenWidth * 0.4:-1 * screenWidth * 0.375,y:isIPhone ? -1 * screenWidth * 0.17:-1 * screenWidth * 0.3)
                 Drawer(isDrawerOpen: isDrawerOpen)
                 drawerButton(isDrawerOpen: $isDrawerOpen)
                 
@@ -214,8 +196,9 @@ struct AufbaIntegerationView:View{
         
         .navigationBarBackButtonHidden(true)
     }
-    
-    
+    /// **Starts the element animation with a Timer**
+
+    /////////////////////////-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     @ViewBuilder
     func incrementerSideBar()->some View{
         
@@ -281,7 +264,7 @@ struct AufbaIntegerationView:View{
         Group{
             RoundedRectangle(cornerRadius: 20)
                 .fill(elementCardColor[selectedElement])
-                .frame(width: screenWidth * 0.25, height: screenHeigth * 0.34)
+                .frame(width: screenWidth * 0.25, height: screenWidth * 0.34)
                 .overlay(alignment:.top){
                     Text("Electronic Configuration")
                         .font(.custom(headerFont, size:isIPhone ? 14:16))

@@ -5,7 +5,30 @@
 //  Created by shamtech07 on 07/11/24.
 //
 import SwiftUI
-let elementsNames : [String] = ["Hydrogen", "Helium", "Lithium", "Beryllium", "Boron",
+let elementsNames : [String] = [
+    "Hydrogenium", "Helium", "Lithium", "Beryllium", "Borum",
+    "Carbonium", "Nitrogenium", "Oxygenium", "Fluorum", "Neon",
+    "Natrium", "Magnesium", "Aluminium", "Silicium", "Phosphorus",
+    "Sulphur", "Chlorum", "Argon", "Kalium", "Calcium",
+    "Scandium", "Titanium", "Vanadium", "Chromium", "Manganum",
+    "Ferrum", "Cobaltum", "Niccolum", "Cuprum", "Zincum",
+    "Gallium", "Germanium", "Arsenicum", "Selenium", "Bromum",
+    "Krypton", "Rubidium", "Strontium", "Yttrium", "Zirconium",
+    "Niobium", "Molybdaenum", "Technetium", "Ruthenium", "Rhodium",
+    "Palladium", "Argentum", "Cadmium", "Indium", "Stannum",
+    "Stibium", "Tellurium", "Iodum", "Xenon", "Caesium",
+    "Barium", "Lanthanum", "Cerium", "Praseodymium", "Neodymium",
+    "Promethium", "Samarium", "Europium", "Gadolinium", "Terbium",
+    "Dysprosium", "Holmium", "Erbium", "Thulium", "Ytterbium",
+    "Lutetium", "Hafnium", "Tantalum", "Wolframium", "Rhenium",
+    "Osmium", "Iridium", "Platinum", "Aurum", "Hydrargyrum",
+    "Thallium", "Plumbum", "Bismuthum", "Polonium", "Astatum",
+    "Radon", "Francium", "Radium", "Actinium", "Thorium",
+    "Protactinium", "Uranium", "Neptunium", "Plutonium", "Americium",
+    "Curium", "Berkelium", "Californium", "Einsteinium", "Fermium",
+    "Mendelevium", "Nobelium", "Lawrencium"
+]
+let CommonNames : [String] = ["Hydrogen", "Helium", "Lithium", "Beryllium", "Boron",
     "Carbon", "Nitrogen", "Oxygen", "Fluorine", "Neon",
     "Sodium", "Magnesium", "Aluminum", "Silicon", "Phosphorus",
     "Sulfur", "Chlorine", "Argon", "Potassium", "Calcium",
@@ -1463,3 +1486,27 @@ let elementUsesVediosLink:[String] = [
     "https://www.youtube.com/watch?v=tzZjHz4vhrI",//nobelium
     "https://www.youtube.com/watch?v=ab9E5ZbfAQU",//lawrentium
 ]
+//
+//let AufbauFirstBumping:[Int] = [0,-1,
+//                                1,-1,2,2,2,2,2,-1,
+//                                3,-1,4,4,4,4,4,-1,
+//                                6,-1,5,5,5,5,5,5,5,5,-1,-1,7,7,7,7,7,-1,
+//                                10,-1,8,8,8,8,8,8,8,-1,10,-1,11,11,11,11,11,-1,
+//                                14,-1,
+//                                -1,9,9,9,9,9,9,9,9,9,9,9,9,-1,12,
+//                                12,12,12,12,12,12,12,14,-1,15,15,15,15,15,-1,
+//                                17,-1,
+//                                15,15,13,13,13,13,13,13,13,13,13,13,13,-1,18
+//                            ]
+//
+//let AufbauSeconBumping:[Int] = [-1,-1,
+//                                -1,-1,-1,-1,-1,-1,-1,-1,
+//                                -1,-1,-1,-1,-1,-1,-1,-1,
+//                                -1,-1,-1,-1,-1,6,-1,-1,-1,-1,6,-1,-1,-1,-1,-1,-1,-1,
+//                                 -1,-1,-1,-1,10,10,-1,10,10,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+//                                 -1,-1,
+//                                 -1,12,-1,-1,-1,-1,-1,12,-1,-1,-1,-1,-1,-1,-1,
+//                                 -1,-1,-1,-1,-1,-1,14,-1,-1,-1,-1,-1,-1,-1,-1,
+//                                 -1,-1,
+//                                 -1,-1,16,16,16,-1,-1,16,16,-1,-1,-1,-1,-1,-1
+//                            ]

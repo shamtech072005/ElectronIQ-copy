@@ -18,6 +18,10 @@ struct PeriodicTableView: View {
                     AppBackground()
                     viewBackgroundColor()
                     Header(content: "", selectedElement: 0)
+                        .onAppear{
+                            print("screen width\(screenWidth)")
+//                            print("screen height\(screenHeigth)")
+                        }
                     VStack(spacing:5){
                         //row 1
                         HStack(spacing:5){
@@ -172,7 +176,7 @@ struct PeriodicTableView: View {
             .overlay{
                 if !isIPhone{
                     AdBannerView().frame(width:screenWidth * 0.8,height: 100)
-                        .offset(y:screenHeigth * 0.3)
+                        .offset(y:screenWidth * 0.3)
                 }
             }
         }

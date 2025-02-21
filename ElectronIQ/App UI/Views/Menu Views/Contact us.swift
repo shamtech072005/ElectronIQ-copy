@@ -73,7 +73,7 @@ struct ContactUsCard: View, Hashable {
             // Background rounded rectangle
             RoundedRectangle(cornerRadius: 10)
                 .fill(.white)
-                .frame(width: screenWidth * 0.35, height: isIPhone ? screenHeigth * 0.08 : screenHeigth * 0.1)
+                .frame(width: screenWidth * 0.35, height: isIPhone ? screenWidth * 0.08 : screenWidth * 0.1)
                 .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 2)
             
             // Content overlay

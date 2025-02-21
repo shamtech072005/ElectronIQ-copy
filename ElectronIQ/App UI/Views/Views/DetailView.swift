@@ -11,6 +11,7 @@ struct DetailView: View {
     @State var selectedElement:Int
     @State private var isDrawerOpen: Bool = false
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         NavigationStack{
             ZStack{
@@ -47,7 +48,7 @@ struct DetailView: View {
                                     .offset(y:-1*screenWidth*0.015)
                             renderBasicParticlesOfAnAtom(selectedElement: selectedElement)
                         }
-                        .offset(y:screenHeigth * 0.0175)
+                        .offset(y:screenWidth * 0.0175)
                      
                     
                         VStack{
@@ -61,9 +62,9 @@ struct DetailView: View {
 
                         renderNavigationButtons(selectedElement: selectedElement)
                     }
-                    .offset(x:isIPhone ? -1 * screenHeigth * 0.02:-1 * screenWidth * 0.01)
+                    .offset(x:isIPhone ? -1 * screenWidth * 0.02:-1 * screenWidth * 0.01)
                 }
-                .offset(x:screenWidth * 0.015,y:isIPhone ? screenHeigth * 0.03:screenHeigth * 0.01)
+                .offset(x:screenWidth * 0.015,y:isIPhone ? screenWidth * 0.03:screenWidth * 0.01)
                 .scaleEffect(isIPhone ? 0.75:0.85)
                 .foregroundColor(contentFontColor)
                 HStack(spacing:isIPhone ? screenWidth * 0.575:screenWidth * 0.65) {
@@ -78,7 +79,7 @@ struct DetailView: View {
             .overlay{
                 Button(action: {dismiss()}, label: {BouncingBackButton(selectedElement: selectedElement)})
                     .scaleEffect(isIPhone ? 0.6:1)
-                    .offset(x:isIPhone ? -1 * screenWidth * 0.4:-1 * screenWidth * 0.375,y:isIPhone ? -1 * screenHeigth * 0.17:-1 * screenHeigth * 0.3)
+                    .offset(x:isIPhone ? -1 * screenWidth * 0.4:-1 * screenWidth * 0.375,y:isIPhone ? -1 * screenWidth * 0.17:-1 * screenWidth * 0.3)
                    
                 Drawer(isDrawerOpen: isDrawerOpen)
                 drawerButton(isDrawerOpen: $isDrawerOpen)
@@ -87,7 +88,7 @@ struct DetailView: View {
             .overlay{
                 if !isIPhone{
                     AdBannerView().frame(width:screenWidth * 0.8,height: 100)
-                        .offset(y:screenHeigth * 0.3)
+                        .offset(y:screenWidth * 0.3)
                 }
             }
         }
